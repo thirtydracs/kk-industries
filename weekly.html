@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>K&K Industries - Weekly Snapshot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .nav a {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 15px;
+    }
+
+    .job {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .row {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+    <h1>K&K Industries</h1>
+
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="weekly.html">Weekly</a>
+      <a href="monthly.html">Monthly</a>
+      <a href="quarterly.html">Quarterly</a>
+    </div>
+
+    <div id="weekly-content"></div>
+  </div>
+
+  <!-- THIS LINE LINKS YOUR DATA -->
+  <script src="data/weekly.js"></script>
+
+  <!-- THIS BUILDS THE PAGE -->
+  <script>
+    const container = document.getElementById('weekly-content');
+
+    weeklyData.forEach(job => {
+      container.innerHTML += `
+        <div class="card">
+          <div class="job">${job.job}</div>
+          <div class="status">Status: ${job.status}</div>
+          <div class="row"><strong>Week Ending:</strong> ${job.weekEnding}</div>
+          <div class="row"><strong>Holding:</strong> ${job.holding}</div>
+          <div class="row"><strong>Labour:</strong> ${job.labour}</div>
+          <div class="row"><strong>Reality:</strong> ${job.reality}</div>
+          <div class="row"><strong>Next:</strong> ${job.next}</div>
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>
