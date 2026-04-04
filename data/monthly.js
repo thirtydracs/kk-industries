@@ -1,1 +1,1 @@
-
+const monthlyData = {};
