@@ -549,63 +549,541 @@
                   <span>${w.text}</span>
                 </div>
               `).join('')}
-            </div>
-            <div class="proj-col">
-              <div class="proj-col-title">Issues &amp; Observations</div>
-              ${p.issues.map(i => `
-                <div class="proj-item">
-                  <div class="proj-item-dot ${i.dot}"></div>
-                  <span>${i.text}</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-          <div class="proj-card-foot">
-            <div class="proj-foot-stats">
-              <div class="proj-foot-stat">Site days <span>${p.stats.days}</span></div>
-              <div class="proj-foot-stat">Labour <span>${p.stats.labour}</span></div>
-              <div class="proj-foot-stat">Weather <span>${p.stats.weather}</span></div>
-            </div>
-            <button class="proj-foot-btn">Week ${wk} Report ↗</button>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K&K Industries — Weekly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0d0f10;
+      --surf:   #161a1c;
+      --surf2:  #1e2426;
+      --border: #2a3035;
+      --accent: #e8a020;
+      --text:   #e8ecee;
+      --muted:  #7a8a92;
+      --ok:     #3ab07a;
+      --warn:   #e8a020;
+      --bad:    #d95040;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg) radial-gradient(circle, #2a3035 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text); min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100; height: 64px; padding: 0 32px;
+      background: var(--surf); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 6px; background: var(--accent);
+      color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .logo-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: .08em; color: var(--text); line-height: 1;
+    }
+
+    .logo-sub {
+      font-size: 11px; color: var(--muted); letter-spacing: .12em;
+      text-transform: uppercase; margin-top: 2px;
+    }
+
+    .hdr-right { display: flex; align-items: center; gap: 16px; }
+
+    .live {
+      display: flex; align-items: center; gap: 6px; font-size: 11px;
+      font-weight: 500; color: var(--ok); font-family: 'DM Mono', monospace;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--ok);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.8); }
+    }
+
+    .hdr-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    /* ── PAGE ── */
+    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex; gap: 4px; width: fit-content;
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 12px; padding: 5px; margin-bottom: 32px;
+    }
+
+    .tab {
+      padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      color: var(--muted); border: none; background: transparent;
+      text-decoration: none; display: inline-block; transition: all .18s;
+    }
+
+    .tab:hover { color: var(--text); background: var(--surf2); }
+    .tab.active { background: var(--accent); color: #000; font-weight: 600; }
+
+    /* ── WEEK NAV ── */
+    .week-nav {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px; margin-bottom: 28px;
+    }
+
+    .week-nav h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 5vw, 56px); letter-spacing: .05em; line-height: 1;
+    }
+
+    .week-nav h1 em { color: var(--accent); font-style: normal; }
+
+    .week-range { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+    .week-controls { display: flex; align-items: center; gap: 8px; }
+
+    .nav-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--surf); border: 1px solid var(--border);
+      color: var(--muted); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all .18s;
+    }
+
+    .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+
+    .nav-label {
+      font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted);
+      padding: 8px 14px; background: var(--surf); border: 1px solid var(--border);
+      border-radius: 8px; white-space: nowrap;
+    }
+
+    /* ── DAY STRIP ── */
+    .day-strip {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 28px;
+    }
+
+    .day-chip {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 10px; text-align: center;
+    }
+
+    .day-chip.today { border-color: var(--accent); }
+
+    .day-name {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .day-date {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      letter-spacing: .04em; line-height: 1;
+    }
+
+    .day-chip.today .day-date { color: var(--accent); }
+
+    .day-dots { display: flex; gap: 3px; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+
+    .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dot.ok   { background: var(--ok); }
+    .dot.warn { background: var(--warn); }
+    .dot.bad  { background: var(--bad); }
+    .dot.off  { background: var(--border); }
+
+    /* ── STATUS PILL ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 99px; font-size: 11px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
+    }
+
+    .pill.ok   { background: rgba(58,176,122,.12);  color: var(--ok); }
+    .pill.warn { background: rgba(232,160,32,.12);  color: var(--warn); }
+    .pill.bad  { background: rgba(217,80,64,.12);   color: var(--bad); }
+    .pill-dot  { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    /* ── JOB CARD ── */
+    .job-card {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 16px;
+    }
+
+    .job-card:last-child { margin-bottom: 0; }
+
+    /* card header */
+    .job-head {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+      padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .job-head-left { display: flex; align-items: center; gap: 12px; }
+
+    .status-bar { width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+    .status-bar.ok   { background: var(--ok); }
+    .status-bar.warn { background: var(--warn); }
+    .status-bar.bad  { background: var(--bad); }
+
+    .job-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: .06em; line-height: 1;
+    }
+
+    .job-location { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* card body — 2 columns */
+    .job-body { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .job-col { padding: 16px 20px; border-right: 1px solid var(--border); }
+    .job-col:last-child { border-right: none; }
+
+    .col-title {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase;
+      padding-bottom: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+
+    /* bullet list items */
+    .job-item {
+      display: flex; gap: 8px; align-items: flex-start;
+      font-size: 13px; line-height: 1.5; margin-bottom: 7px;
+    }
+
+    .job-item:last-child { margin-bottom: 0; }
+
+    .item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 5px;
+    }
+
+    .item-dot.ok    { background: var(--ok); }
+    .item-dot.warn  { background: var(--warn); }
+    .item-dot.bad   { background: var(--bad); }
+    .item-dot.muted { background: var(--border); }
+
+    /* blocker box — amber tinted */
+    .blocker-box {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 13px; border-radius: 8px; margin-top: 12px;
+      background: rgba(232,160,32,.07); border: 1px solid rgba(232,160,32,.22);
+      font-size: 13px; line-height: 1.5;
+    }
+
+    .blocker-box.none { display: none; }
+
+    .blocker-icon {
+      font-size: 13px; flex-shrink: 0; margin-top: 1px; color: var(--warn);
+    }
+
+    .blocker-label {
+      font-size: 10px; font-weight: 600; color: var(--warn);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px;
+    }
+
+    .blocker-text { color: var(--text); }
+
+    /* card footer */
+    .job-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+      padding: 12px 20px; border-top: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .foot-subs {
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+
+    .foot-subs strong { color: var(--text); font-weight: 500; }
+
+    .foot-link {
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      background: none; border: none; cursor: pointer; letter-spacing: .04em;
+      transition: opacity .18s;
+    }
+
+    .foot-link:hover { opacity: .65; }
+
+    /* ── NEXT DAY PANEL ── */
+    .next-card {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-top: 24px;
+    }
+
+    .next-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .next-head-label {
+      font-size: 13px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .next-head-wk { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    .next-row {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+    }
+
+    .next-row:last-child { border-bottom: none; }
+
+    .next-bar { width: 4px; border-radius: 2px; flex-shrink: 0; align-self: stretch; }
+    .next-bar.ok   { background: var(--ok); }
+    .next-bar.warn { background: var(--warn); }
+    .next-bar.bad  { background: var(--bad); }
+
+    .next-proj {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .next-text { font-size: 13px; line-height: 1.55; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 20px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .a1 { animation: fadeUp .45s ease both; }
+    .a2 { animation: fadeUp .45s .08s ease both; }
+    .a3 { animation: fadeUp .45s .16s ease both; }
+    .a4 { animation: fadeUp .45s .24s ease both; }
+
+    @media (max-width: 680px) {
+      header, footer { padding-left: 16px; padding-right: 16px; }
+      .page { padding: 24px 16px 60px; }
+      .job-body { grid-template-columns: 1fr; }
+      .job-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .job-col:last-child { border-bottom: none; }
+      .week-nav { flex-direction: column; align-items: flex-start; }
+      .tab { padding: 8px 14px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">
+      <div class="logo-mark">KK</div>
+      <div>
+        <div class="logo-name">K&amp;K Industries</div>
+        <div class="logo-sub">Site Snapshots</div>
+      </div>
+    </a>
+    <div class="hdr-right">
+      <div class="live"><div class="live-dot"></div>Live</div>
+      <div class="hdr-date" id="hdrDate"></div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <nav class="tabs a1">
+      <a class="tab" href="index.html">Overview</a>
+      <a class="tab active" href="weekly.html">Weekly</a>
+      <a class="tab" href="monthly.html">Monthly</a>
+    </nav>
+
+    <div class="week-nav a2">
+      <div>
+        <h1>Week <em id="wkNum">14</em> Snapshot</h1>
+        <div class="week-range" id="wkRange"></div>
+      </div>
+      <div class="week-controls">
+        <button class="nav-btn" id="btnPrev">‹</button>
+        <div class="nav-label" id="wkLabel"></div>
+        <button class="nav-btn" id="btnNext">›</button>
+      </div>
+    </div>
+
+    <div class="day-strip a3" id="dayStrip"></div>
+    <div id="jobGrid" class="a4"></div>
+    <div id="nextPanel"></div>
+
+  </div>
+
+  <footer>
+    <span>K&amp;K Industries Pty Ltd</span>
+    <span id="ftrTime"></span>
+  </footer>
+
+  <script src="data/weekly.js"></script>
+  <script>
+    /* ── CLOCK ── */
+    const fmtDate = d => d.toLocaleDateString('en-AU',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+    const tick = () => {
+      const n = new Date();
+      document.getElementById('hdrDate').textContent = fmtDate(n);
+      document.getElementById('ftrTime').textContent = 'Last updated ' + n.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+    };
+    tick(); setInterval(tick, 30000);
+
+    /* ── STATUS HELPERS ── */
+    // Maps programmeStatus string → CSS class
+    function statusClass(s) {
+      if (s === 'Behind')   return 'bad';
+      if (s === 'At Risk')  return 'warn';
+      if (s === 'Ahead')    return 'ok';
+      return 'ok'; // "On Track" default
+    }
+
+    /* ── RENDER ── */
+    let cur = 14;
+    const keys = Object.keys(WEEKS).map(Number).sort((a,b) => a - b);
+
+    function render(wk) {
+      const d = WEEKS[wk];
+
+      document.getElementById('wkNum').textContent   = wk;
+      document.getElementById('wkRange').textContent = d.range;
+      document.getElementById('wkLabel').textContent = `Week ${wk} · 2026`;
+      document.getElementById('btnPrev').disabled    = (wk === Math.min(...keys));
+      document.getElementById('btnNext').disabled    = (wk === Math.max(...keys));
+
+      /* Day strip */
+      document.getElementById('dayStrip').innerHTML = d.days.map(day => `
+        <div class="day-chip${day.today ? ' today' : ''}">
+          <div class="day-name">${day.name}</div>
+          <div class="day-date">${day.date}</div>
+          <div class="day-dots">${day.dots.map(c => `<div class="dot ${c}"></div>`).join('')}</div>
         </div>
       `).join('');
 
-      // Next week section
-      const existing = document.getElementById('nextWeekSection');
-      if (existing) existing.remove();
+      /* Job cards */
+      document.getElementById('jobGrid').innerHTML = d.jobs.map(j => {
+        const cls        = statusClass(j.programmeStatus);
+        const hasBlocker = j.holdingUp && j.holdingUp !== 'None';
+        const hasSub     = j.subcontractorIssues && j.subcontractorIssues !== 'None';
+        const hasMat     = j.materialIssues && j.materialIssues !== 'None';
 
-      const nw = document.createElement('div');
-      nw.id = 'nextWeekSection';
-      nw.style.cssText = 'margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;animation:fadeUp .5s .2s ease both';
-      nw.innerHTML = `
-        <div style="padding:18px 22px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between">
-          <span style="font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Next Week — Planned Works</span>
-          <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">Week ${wk+1}</span>
-        </div>
-        ${data.projects.map(p => `
-          <div style="padding:14px 22px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start">
-            <div style="width:4px;height:100%;min-height:20px;border-radius:2px;background:var(--${p.status === 'ok' ? 'ok' : p.status === 'warn' ? 'warn' : 'danger'});flex-shrink:0;align-self:stretch"></div>
-            <div>
-              <div style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px">${p.name}</div>
-              <div style="font-size:13px;color:var(--text);line-height:1.5">${p.nextWeek}</div>
+        return `
+        <div class="job-card">
+
+          <div class="job-head">
+            <div class="job-head-left">
+              <div class="status-bar ${cls}"></div>
+              <div>
+                <div class="job-name">${j.name}</div>
+                <div class="job-location">${j.location}</div>
+              </div>
             </div>
+            <div class="pill ${cls}"><div class="pill-dot"></div>${j.programmeStatus}</div>
           </div>
-        `).join('')}
+
+          <div class="job-body">
+
+            <!-- LEFT: work areas + activity -->
+            <div class="job-col">
+              <div class="col-title">Work Areas</div>
+              ${j.workAreas.map(w => `
+                <div class="job-item">
+                  <div class="item-dot muted"></div><span>${w}</span>
+                </div>`).join('')}
+
+              <div class="col-title" style="margin-top:16px">Today's Activity</div>
+              ${j.activity.map(a => `
+                <div class="job-item">
+                  <div class="item-dot ok"></div><span>${a}</span>
+                </div>`).join('')}
+            </div>
+
+            <!-- RIGHT: issues -->
+            <div class="job-col">
+              <div class="col-title">Issues</div>
+
+              ${hasSub ? `
+                <div class="job-item">
+                  <div class="item-dot bad"></div>
+                  <span><strong>Subcontractor —</strong> ${j.subcontractorIssues}</span>
+                </div>` : `
+                <div class="job-item">
+                  <div class="item-dot ok"></div>
+                  <span style="color:var(--muted)">No subcontractor issues</span>
+                </div>`}
+
+              ${hasMat ? `
+                <div class="job-item">
+                  <div class="item-dot warn"></div>
+                  <span><strong>Materials —</strong> ${j.materialIssues}</span>
+                </div>` : `
+                <div class="job-item">
+                  <div class="item-dot ok"></div>
+                  <span style="color:var(--muted)">No material issues</span>
+                </div>`}
+
+              ${hasBlocker ? `
+                <div class="blocker-box">
+                  <div class="blocker-icon">⚠</div>
+                  <div>
+                    <div class="blocker-label">Holding Up — ${j.holdingUp}</div>
+                    <div class="blocker-text">${j.holdingUpDetail}</div>
+                  </div>
+                </div>` : ''}
+            </div>
+
+          </div>
+
+          <div class="job-foot">
+            <div class="foot-subs">On site: <strong>${j.subcontractors}</strong></div>
+            <button class="foot-link">Week ${wk} Report ↗</button>
+          </div>
+
+        </div>`;
+      }).join('');
+
+      /* Next day panel */
+      document.getElementById('nextPanel').innerHTML = `
+        <div class="next-card">
+          <div class="next-head">
+            <span class="next-head-label">Next Day — Planned Works</span>
+            <span class="next-head-wk">Week ${wk}</span>
+          </div>
+          ${d.jobs.map(j => {
+            const cls = statusClass(j.programmeStatus);
+            return `
+            <div class="next-row">
+              <div class="next-bar ${cls}"></div>
+              <div>
+                <div class="next-proj">${j.name}</div>
+                <div class="next-text">${j.nextDay}</div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
       `;
-      nw.querySelector('div:last-child') && (nw.querySelector('div:last-child').style.borderBottom = 'none');
-      document.getElementById('projectGrid').after(nw);
     }
 
-    renderWeek(14);
+    render(cur);
 
-    document.getElementById('prevWeek').addEventListener('click', () => {
-      if (weekData[currentWeek - 1]) { currentWeek--; renderWeek(currentWeek); }
-    });
-
-    document.getElementById('nextWeek').addEventListener('click', () => {
-      if (weekData[currentWeek + 1]) { currentWeek++; renderWeek(currentWeek); }
-    });
+    document.getElementById('btnPrev').addEventListener('click', () => { if (WEEKS[cur-1]) { cur--; render(cur); } });
+    document.getElementById('btnNext').addEventListener('click', () => { if (WEEKS[cur+1]) { cur++; render(cur); } });
   </script>
 
 </body>
