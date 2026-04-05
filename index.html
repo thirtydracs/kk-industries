@@ -6,1301 +6,41 @@
   <title>K&K Industries — Site Snapshots</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0d0f10;
-      --surface:  #161a1c;
-      --surface2: #1e2426;
-      --border:   #2a3035;
-      --accent:   #e8a020;
-      --accent2:  #c47a10;
-      --text:     #e8ecee;
-      --muted:    #7a8a92;
-      --danger:   #d95040;
-      --ok:       #3ab07a;
-    }
-
-    html { font-size: 16px; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 0;
-
-      /* subtle dot grid */
-      background-image: radial-gradient(circle, #2a3035 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-
-    /* ── HEADER ─────────────────────────────────────── */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(8px);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-mark {
-      width: 36px;
-      height: 36px;
-      background: var(--accent);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      flex-shrink: 0;
-    }
-
-    .logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .logo-sub {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .live-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--ok);
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--ok);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.8); }
-    }
-
-    .date-stamp {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-
-    /* ── LAYOUT ─────────────────────────────────────── */
-    .page {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-    }
-
-    /* ── PAGE TITLE ─────────────────────────────────── */
-    .page-title {
-      margin-bottom: 36px;
-      animation: fadeUp 0.5s ease both;
-    }
-
-    .page-title h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(40px, 6vw, 64px);
-      letter-spacing: 0.05em;
-      line-height: 1;
-      color: var(--text);
-    }
-
-    .page-title h1 span {
-      color: var(--accent);
-    }
-
-    .page-title p {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── NAV TABS ───────────────────────────────────── */
-    .tab-bar {
-      display: flex;
-      gap: 4px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 5px;
-      margin-bottom: 28px;
-      width: fit-content;
-      animation: fadeUp 0.5s 0.1s ease both;
-    }
-
-    .tab {
-      padding: 9px 22px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      transition: all 0.2s ease;
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .tab:hover {
-      color: var(--text);
-      background: var(--surface2);
-    }
-
-    .tab.active {
-      background: var(--accent);
-      color: #000;
-      font-weight: 600;
-    }
-
-    /* ── STAT STRIP ─────────────────────────────────── */
-    .stat-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-      animation: fadeUp 0.5s 0.15s ease both;
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 18px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .stat-card:hover { border-color: var(--accent); }
-    .stat-card:hover::before { opacity: 1; }
-
-    .stat-label {
-      font-size: 10px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      letter-spacing: 0.04em;
-      line-height: 1;
-      color: var(--text);
-    }
-
-    .stat-value.ok    { color: var(--ok); }
-    .stat-value.warn  { color: var(--accent); }
-    .stat-value.bad   { color: var(--danger); }
-
-    .stat-change {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-      font-family: 'DM Mono', monospace;
-    }
-
-    /* ── MAIN CARD ──────────────────────────────────── */
-    .main-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      animation: fadeUp 0.5s 0.2s ease both;
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface2);
-    }
-
-    .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .card-action {
-      font-size: 12px;
-      color: var(--accent);
-      font-weight: 500;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      letter-spacing: 0.04em;
-      transition: opacity 0.2s;
-    }
-    .card-action:hover { opacity: 0.7; }
-
-    /* ── PROJECT ROWS ───────────────────────────────── */
-    .project-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-
-    .project-row:last-child { border-bottom: none; }
-    .project-row:hover { background: var(--surface2); }
-
-    .project-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .project-meta {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-      font-family: 'DM Mono', monospace;
-    }
-
-    .progress-col {
-      width: 120px;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 5px;
-      font-family: 'DM Mono', monospace;
-    }
-
-    .progress-bar {
-      height: 5px;
-      background: var(--surface2);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: var(--accent);
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .progress-fill.ok   { background: var(--ok); }
-    .progress-fill.warn { background: var(--accent); }
-    .progress-fill.bad  { background: var(--danger); }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .status-pill.ok   { background: rgba(58,176,122,0.12); color: var(--ok); }
-    .status-pill.warn { background: rgba(232,160,32,0.12); color: var(--accent); }
-    .status-pill.bad  { background: rgba(217,80,64,0.12);  color: var(--danger); }
-
-    .pill-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* ── EMPTY STATE ────────────────────────────────── */
-    .empty-state {
-      padding: 64px 24px;
-      text-align: center;
-    }
-
-    .empty-icon {
-      font-size: 40px;
-      margin-bottom: 16px;
-      opacity: 0.4;
-    }
-
-    .empty-state h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .empty-state p {
-      font-size: 13px;
-      color: var(--muted);
-      max-width: 280px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* ── FOOTER ─────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── ANIMATIONS ─────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 600px) {
-      header { padding: 0 16px; }
-      .page  { padding: 24px 16px 60px; }
-
-      .project-row {
-        grid-template-columns: 1fr auto;
-        grid-template-rows: auto auto;
-      }
-
-      .progress-col { display: none; }
-
-      .stat-strip { grid-template-columns: 1fr 1fr; }
-
-      .tab { padding: 8px 14px; font-size: 12px; }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <div class="logo-mark">KK</div>
-      <div>
-        <div class="logo-text">K&amp;K Industries</div>
-        <div class="logo-sub">Site Snapshots</div>
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        Live
-      </div>
-      <div class="date-stamp" id="datestamp"></div>
-    </div>
-  </header>
-
-  <!-- MAIN -->
-  <div class="page">
-
-    <div class="page-title">
-      <h1>Project <span>Overview</span></h1>
-      <p>Weekly site performance snapshots across all active projects</p>
-    </div>
-
-    <!-- TAB BAR -->
-    <div class="tab-bar">
-      <a href="weekly.html"  class="tab active">Weekly</a>
-      <a href="monthly.html" class="tab">Monthly</a>
-      <a href="#"            class="tab">Quarterly</a>
-    </div>
-
-    <!-- STAT STRIP -->
-    <div class="stat-strip">
-      <div class="stat-card">
-        <div class="stat-label">Active Sites</div>
-        <div class="stat-value">04</div>
-        <div class="stat-change">↑ 1 from last week</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">On Track</div>
-        <div class="stat-value ok">02</div>
-        <div class="stat-change">50% of portfolio</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">At Risk</div>
-        <div class="stat-value warn">01</div>
-        <div class="stat-change">Monitoring closely</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Delayed</div>
-        <div class="stat-value bad">01</div>
-        <div class="stat-change">Action required</div>
-      </div>
-    </div>
-
-    <!-- PROJECT TABLE -->
-    <div class="main-card">
-      <div class="card-header">
-        <span class="card-title">Active Projects — Week 14, 2026</span>
-        <button class="card-action">Export ↗</button>
-      </div>
-
-      <!-- Row 1 -->
-      <div class="project-row">
-        <div>
-          <div class="project-name">Pearl Energy Childers</div>
-          <div class="project-meta">Ktori Group · QLD · Since Jan 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>38%</span></div>
-          <div class="progress-bar"><div class="progress-fill bad" style="width:38%"></div></div>
-        </div>
-        <div class="status-pill bad"><div class="pill-dot"></div>Delayed</div>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="project-row">
-        <div>
-          <div class="project-name">Exus Williamstown</div>
-          <div class="project-meta">Contractor TBC · VIC · Since Feb 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>61%</span></div>
-          <div class="progress-bar"><div class="progress-fill ok" style="width:61%"></div></div>
-        </div>
-        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
-      </div>
-
-      <!-- Row 3 -->
-      <div class="project-row">
-        <div>
-          <div class="project-name">Emerald</div>
-          <div class="project-meta">Contractor TBC · VIC · Since Mar 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>22%</span></div>
-          <div class="progress-bar"><div class="progress-fill warn" style="width:22%"></div></div>
-        </div>
-        <div class="status-pill warn"><div class="pill-dot"></div>At Risk</div>
-      </div>
-
-      <!-- Row 4 -->
-      <div class="project-row">
-        <div>
-          <div class="project-name">Caltex D'Aguilar</div>
-          <div class="project-meta">Contractor TBC · QLD · Since Dec 2025</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>79%</span></div>
-          <div class="progress-bar"><div class="progress-fill ok" style="width:79%"></div></div>
-        </div>
-        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <span>K&amp;K Industries Pty Ltd</span>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K&K Industries — Site Snapshots</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:       #0d0f10;
-      --surface:  #161a1c;
-      --surface2: #1e2426;
-      --border:   #2a3035;
-      --accent:   #e8a020;
-      --text:     #e8ecee;
-      --muted:    #7a8a92;
-      --danger:   #d95040;
-      --ok:       #3ab07a;
-      --warn:     #e8a020;
-      --drawer-w: 420px;
-    }
-
-    html { font-size: 16px; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      background-image: radial-gradient(circle, #2a3035 1px, transparent 1px);
-      background-size: 28px 28px;
-      overflow-x: hidden;
-    }
-
-    /* ── HEADER ─────────────────────────────────────── */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 32px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 200;
-    }
-
-    .logo { display: flex; align-items: center; gap: 12px; }
-
-    .logo-mark {
-      width: 36px; height: 36px; background: var(--accent); border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: #000; flex-shrink: 0;
-    }
-
-    .logo-text {
-      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
-      letter-spacing: 0.08em; color: var(--text); line-height: 1;
-    }
-
-    .logo-sub {
-      font-size: 11px; color: var(--muted); font-weight: 400;
-      letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px;
-    }
-
-    .header-right { display: flex; align-items: center; gap: 16px; }
-
-    .live-badge {
-      display: flex; align-items: center; gap: 6px; font-size: 11px;
-      font-weight: 500; color: var(--ok); font-family: 'DM Mono', monospace;
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
-
-    .live-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--ok); animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.4; transform:scale(.8); }
-    }
-
-    .date-stamp {
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      color: var(--muted); letter-spacing: 0.04em;
-    }
-
-    /* ── PAGE ───────────────────────────────────────── */
-    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
-
-    .page-title { margin-bottom: 36px; animation: fadeUp .5s ease both; }
-
-    .page-title h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(40px, 6vw, 64px); letter-spacing: .05em; line-height: 1;
-    }
-
-    .page-title h1 span { color: var(--accent); }
-
-    .page-title p {
-      margin-top: 8px; color: var(--muted);
-      font-size: 14px; font-weight: 300; letter-spacing: .04em;
-    }
-
-    /* ── TABS ───────────────────────────────────────── */
-    .tab-bar {
-      display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 5px; margin-bottom: 28px;
-      width: fit-content; animation: fadeUp .5s .1s ease both;
-    }
-
-    .tab {
-      padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 500;
-      color: var(--muted); cursor: pointer; border: none; background: transparent;
-      transition: all .2s ease; letter-spacing: .03em; text-decoration: none; display: inline-block;
-    }
-
-    .tab:hover { color: var(--text); background: var(--surface2); }
-    .tab.active { background: var(--accent); color: #000; font-weight: 600; }
-
-    /* ── STAT STRIP ─────────────────────────────────── */
-    .stat-strip {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-      gap: 12px; margin-bottom: 28px; animation: fadeUp .5s .15s ease both;
-    }
-
-    .stat-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px 18px;
-      position: relative; overflow: hidden; transition: border-color .2s;
-    }
-
-    .stat-card::before {
-      content:''; position:absolute; top:0; left:0; right:0; height:3px;
-      background: var(--accent); opacity:0; transition: opacity .2s;
-    }
-
-    .stat-card:hover { border-color: var(--accent); }
-    .stat-card:hover::before { opacity:1; }
-
-    .stat-label {
-      font-size: 10px; font-weight: 500; color: var(--muted);
-      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
-      letter-spacing: .04em; line-height: 1;
-    }
-
-    .stat-value.ok   { color: var(--ok); }
-    .stat-value.warn { color: var(--warn); }
-    .stat-value.bad  { color: var(--danger); }
-
-    .stat-change { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: 'DM Mono', monospace; }
-
-    /* ── MAIN CARD ──────────────────────────────────── */
-    .main-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden; animation: fadeUp .5s .2s ease both;
-    }
-
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--surface2);
-    }
-
-    .card-title {
-      font-size: 13px; font-weight: 600; letter-spacing: .06em;
-      text-transform: uppercase; color: var(--muted);
-    }
-
-    .card-action {
-      font-size: 12px; color: var(--accent); font-weight: 500;
-      cursor: pointer; background: none; border: none;
-      letter-spacing: .04em; transition: opacity .2s;
-    }
-
-    .card-action:hover { opacity: .7; }
-
-    /* ── PROJECT ROWS ───────────────────────────────── */
-    .project-row {
-      display: grid; grid-template-columns: 1fr auto auto auto;
-      align-items: center; gap: 16px; padding: 18px 24px;
-      border-bottom: 1px solid var(--border); transition: background .15s;
-      cursor: pointer; position: relative;
-    }
-
-    .project-row:last-child { border-bottom: none; }
-    .project-row:hover { background: var(--surface2); }
-    .project-row:hover .row-arrow { opacity:1; transform:translateX(0); }
-    .project-row.active-row { background: var(--surface2); border-left: 3px solid var(--accent); }
-
-    .project-name { font-size: 15px; font-weight: 500; color: var(--text); }
-
-    .project-meta {
-      font-size: 12px; color: var(--muted); margin-top: 3px; font-family: 'DM Mono', monospace;
-    }
-
-    .progress-col { width: 120px; }
-
-    .progress-label {
-      display: flex; justify-content: space-between; font-size: 11px;
-      color: var(--muted); margin-bottom: 5px; font-family: 'DM Mono', monospace;
-    }
-
-    .progress-bar { height: 5px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
-
-    .progress-fill {
-      height: 100%; border-radius: 99px; background: var(--accent);
-      transition: width .8s cubic-bezier(.16,1,.3,1);
-    }
-
-    .progress-fill.ok   { background: var(--ok); }
-    .progress-fill.warn { background: var(--warn); }
-    .progress-fill.bad  { background: var(--danger); }
-
-    .status-pill {
-      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
-      border-radius: 99px; font-size: 11px; font-weight: 600;
-      letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
-    }
-
-    .status-pill.ok   { background: rgba(58,176,122,.12);  color: var(--ok); }
-    .status-pill.warn { background: rgba(232,160,32,.12);  color: var(--warn); }
-    .status-pill.bad  { background: rgba(217,80,64,.12);   color: var(--danger); }
-
-    .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-
-    .row-arrow {
-      font-size: 16px; color: var(--muted);
-      opacity: 0; transform: translateX(-4px); transition: all .2s ease;
-    }
-
-    /* ── BACKDROP ───────────────────────────────────── */
-    .backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,.55);
-      backdrop-filter: blur(2px); z-index: 300;
-      opacity: 0; pointer-events: none; transition: opacity .3s ease;
-    }
-
-    .backdrop.open { opacity: 1; pointer-events: all; }
-
-    /* ── DRAWER ─────────────────────────────────────── */
-    .drawer {
-      position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer-w);
-      background: var(--surface); border-left: 1px solid var(--border);
-      z-index: 400; transform: translateX(100%);
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
-      display: flex; flex-direction: column; overflow: hidden;
-    }
-
-    .drawer.open { transform: translateX(0); }
-
-    .drawer-head {
-      padding: 20px 24px 18px; border-bottom: 1px solid var(--border);
-      background: var(--surface2); flex-shrink: 0;
-    }
-
-    .drawer-close {
-      display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted);
-      font-family: 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase;
-      cursor: pointer; background: none; border: none; margin-bottom: 14px; transition: color .15s;
-    }
-
-    .drawer-close:hover { color: var(--text); }
-    .drawer-close svg { width: 14px; height: 14px; }
-
-    .drawer-project-name {
-      font-family: 'Bebas Neue', sans-serif; font-size: 30px;
-      letter-spacing: .06em; line-height: 1.1; color: var(--text);
-    }
-
-    .drawer-meta { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 4px; }
-
-    .drawer-status-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
-
-    .drawer-body {
-      flex: 1; overflow-y: auto; padding: 20px 24px;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-
-    .drawer-body::-webkit-scrollbar { width: 4px; }
-    .drawer-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    .d-section { margin-bottom: 24px; }
-
-    .d-section-title {
-      font-size: 10px; font-weight: 600; color: var(--muted);
-      letter-spacing: .12em; text-transform: uppercase;
-      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
-    }
-
-    .d-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-    .d-kpi {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 14px;
-    }
-
-    .d-kpi-label {
-      font-size: 10px; color: var(--muted);
-      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px;
-    }
-
-    .d-kpi-val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--text); }
-    .d-kpi-val.ok   { color: var(--ok); }
-    .d-kpi-val.warn { color: var(--warn); }
-    .d-kpi-val.bad  { color: var(--danger); }
-
-    .d-prog-wrap { margin-bottom: 6px; }
-
-    .d-prog-top {
-      display: flex; justify-content: space-between; font-size: 12px;
-      margin-bottom: 6px; font-family: 'DM Mono', monospace; color: var(--muted);
-    }
-
-    .d-prog-bar { height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; }
-
-    .d-prog-fill {
-      height: 100%; border-radius: 99px; transition: width .9s cubic-bezier(.16,1,.3,1);
-    }
-
-    .d-prog-fill.ok   { background: var(--ok); }
-    .d-prog-fill.warn { background: var(--warn); }
-    .d-prog-fill.bad  { background: var(--danger); }
-
-    .d-issue {
-      display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
-      border-radius: 8px; background: var(--surface2); border: 1px solid var(--border);
-      margin-bottom: 8px; font-size: 13px; line-height: 1.5;
-    }
-
-    .d-issue:last-child { margin-bottom: 0; }
-
-    .d-issue-dot {
-      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
-    }
-
-    .d-issue-dot.bad  { background: var(--danger); }
-    .d-issue-dot.warn { background: var(--warn); }
-    .d-issue-dot.ok   { background: var(--ok); }
-
-    .d-action {
-      display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
-      border-radius: 8px; background: rgba(232,160,32,.06); border: 1px solid rgba(232,160,32,.2);
-      margin-bottom: 8px; font-size: 13px; line-height: 1.5;
-    }
-
-    .d-action:last-child { margin-bottom: 0; }
-
-    .d-action-num {
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      color: var(--accent); font-weight: 500; flex-shrink: 0; margin-top: 1px;
-    }
-
-    .drawer-foot {
-      padding: 16px 24px; border-top: 1px solid var(--border);
-      flex-shrink: 0; display: flex; gap: 10px;
-    }
-
-    .d-btn {
-      flex: 1; padding: 10px; border-radius: 8px; font-size: 13px;
-      font-weight: 500; cursor: pointer; border: none; transition: opacity .2s; letter-spacing: .02em;
-    }
-
-    .d-btn:hover { opacity: .8; }
-    .d-btn-primary { background: var(--accent); color: #000; }
-    .d-btn-ghost { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-
-    /* ── FOOTER ─────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border); padding: 20px 32px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .04em;
-    }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(14px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      :root { --drawer-w: 100vw; }
-      header { padding: 0 16px; }
-      .page  { padding: 24px 16px 60px; }
-      .project-row { grid-template-columns: 1fr auto auto; }
-      .progress-col { display: none; }
-      .stat-strip { grid-template-columns: 1fr 1fr; }
-      .tab { padding: 8px 14px; font-size: 12px; }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <div class="logo">
-      <div class="logo-mark">KK</div>
-      <div>
-        <div class="logo-text">K&amp;K Industries</div>
-        <div class="logo-sub">Site Snapshots</div>
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="live-badge"><div class="live-dot"></div>Live</div>
-      <div class="date-stamp" id="datestamp"></div>
-    </div>
-  </header>
-
-  <div class="page">
-
-    <div class="page-title">
-      <h1>Project <span>Overview</span></h1>
-      <p>Weekly site performance snapshots across all active projects</p>
-    </div>
-
-    <div class="tab-bar">
-      <a href="weekly.html"  class="tab active">Weekly</a>
-      <a href="monthly.html" class="tab">Monthly</a>
-      <a href="#"            class="tab">Quarterly</a>
-    </div>
-
-    <div class="stat-strip">
-      <div class="stat-card">
-        <div class="stat-label">Active Sites</div>
-        <div class="stat-value">04</div>
-        <div class="stat-change">↑ 1 from last week</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">On Track</div>
-        <div class="stat-value ok">02</div>
-        <div class="stat-change">50% of portfolio</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">At Risk</div>
-        <div class="stat-value warn">01</div>
-        <div class="stat-change">Monitoring closely</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Delayed</div>
-        <div class="stat-value bad">01</div>
-        <div class="stat-change">Action required</div>
-      </div>
-    </div>
-
-    <div class="main-card">
-      <div class="card-header">
-        <span class="card-title">Active Projects — Week 14, 2026</span>
-        <button class="card-action">Export ↗</button>
-      </div>
-
-      <div class="project-row" data-project="childers">
-        <div>
-          <div class="project-name">Pearl Energy Childers</div>
-          <div class="project-meta">Ktori Group · QLD · Since Jan 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>38%</span></div>
-          <div class="progress-bar"><div class="progress-fill bad" style="width:38%"></div></div>
-        </div>
-        <div class="status-pill bad"><div class="pill-dot"></div>Delayed</div>
-        <div class="row-arrow">›</div>
-      </div>
-
-      <div class="project-row" data-project="williamstown">
-        <div>
-          <div class="project-name">Exus Williamstown</div>
-          <div class="project-meta">Contractor TBC · VIC · Since Feb 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>61%</span></div>
-          <div class="progress-bar"><div class="progress-fill ok" style="width:61%"></div></div>
-        </div>
-        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
-        <div class="row-arrow">›</div>
-      </div>
-
-      <div class="project-row" data-project="emerald">
-        <div>
-          <div class="project-name">Emerald</div>
-          <div class="project-meta">Contractor TBC · VIC · Since Mar 2026</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>22%</span></div>
-          <div class="progress-bar"><div class="progress-fill warn" style="width:22%"></div></div>
-        </div>
-        <div class="status-pill warn"><div class="pill-dot"></div>At Risk</div>
-        <div class="row-arrow">›</div>
-      </div>
-
-      <div class="project-row" data-project="daguilar">
-        <div>
-          <div class="project-name">Caltex D'Aguilar</div>
-          <div class="project-meta">Contractor TBC · QLD · Since Dec 2025</div>
-        </div>
-        <div class="progress-col">
-          <div class="progress-label"><span>Progress</span><span>79%</span></div>
-          <div class="progress-bar"><div class="progress-fill ok" style="width:79%"></div></div>
-        </div>
-        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
-        <div class="row-arrow">›</div>
-      </div>
-    </div>
-
-  </div>
-
-  <footer>
-    <span>K&amp;K Industries Pty Ltd</span>
-    <span id="footer-time"></span>
-  </footer>
-
-  <!-- BACKDROP -->
-  <div class="backdrop" id="backdrop"></div>
-
-  <!-- DRAWER -->
-  <div class="drawer" id="drawer">
-    <div class="drawer-head">
-      <button class="drawer-close" id="drawerClose">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 1l12 12M13 1L1 13"/>
-        </svg>
-        Close
-      </button>
-      <div class="drawer-project-name" id="dName"></div>
-      <div class="drawer-meta" id="dMeta"></div>
-      <div class="drawer-status-row">
-        <div class="status-pill" id="dPill"><div class="pill-dot"></div><span id="dPillTxt"></span></div>
-        <span id="dWeek" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)"></span>
-      </div>
-    </div>
-
-    <div class="drawer-body" id="drawerBody"></div>
-
-    <div class="drawer-foot">
-      <button class="d-btn d-btn-primary">Open Full Report ↗</button>
-      <button class="d-btn d-btn-ghost" id="drawerClose2">Close</button>
-    </div>
-  </div>
-
-  <script>
-    /* DATE/TIME */
-    function fmt(d) {
-      return d.toLocaleDateString('en-AU', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
-    }
-    function fmtTime(d) {
-      return d.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
-    }
-    function tick() {
-      const now = new Date();
-      document.getElementById('datestamp').textContent   = fmt(now);
-      document.getElementById('footer-time').textContent = 'Last updated ' + fmtTime(now);
-    }
-    tick(); setInterval(tick, 30000);
-
-    /* PROGRESS BARS */
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.progress-fill').forEach(bar => {
-        const w = bar.style.width; bar.style.width = '0%';
-        setTimeout(() => { bar.style.width = w; }, 200);
-      });
-    });
-
-    /* PROJECT DATA */
-    const projects = {
-      childers: {
-        name: 'Pearl Energy Childers',
-        meta: 'Ktori Group · QLD · Since Jan 2026',
-        week: 'Week 14, 2026',
-        status: 'bad', label: 'Delayed',
-        kpis: [
-          { label: 'Programme Delay',  val: '15–20 days', cls: 'bad' },
-          { label: 'Progress',         val: '38%',        cls: 'bad' },
-          { label: 'Contractor Claim', val: '2 days',     cls: 'warn' },
-          { label: 'Weeks Active',     val: '13',         cls: '' },
-        ],
-        prog: { pct: 38, cls: 'bad' },
-        thisWeek: 'No concrete works commenced. Site preparation activities ongoing. Daily diary logs reviewed — no change to critical path status.',
-        issues: [
-          { dot: 'bad',  text: 'Brucon (concrete subcontractor) has not mobilised — critical path impact.' },
-          { dot: 'bad',  text: 'Contractor-reported delay of 2 days significantly understates actual programme loss of 15–20 working days.' },
-          { dot: 'warn', text: 'Slab works and structural steel cannot commence until Brucon is on site.' },
-          { dot: 'warn', text: 'Contractor has not issued a revised programme reflecting current delays.' },
-        ],
-        actions: [
-          'Demand written confirmation from Ktori Group on Brucon mobilisation date.',
-          'Request revised programme issued by end of this week.',
-          'Table formal delay notice to contractor if mobilisation not confirmed within 48 hrs.',
-          'Update client on corrected delay assessment — 15–20 WDs, not 2.',
-        ],
-      },
-      williamstown: {
-        name: 'Exus Williamstown',
-        meta: 'Contractor TBC · VIC · Since Feb 2026',
-        week: 'Week 14, 2026',
-        status: 'ok', label: 'On Track',
-        kpis: [
-          { label: 'Programme Variance', val: '+2 days', cls: 'ok' },
-          { label: 'Progress',           val: '61%',     cls: 'ok' },
-          { label: 'Open RFIs',          val: '3',       cls: 'warn' },
-          { label: 'Weeks Active',       val: '8',       cls: '' },
-        ],
-        prog: { pct: 61, cls: 'ok' },
-        thisWeek: 'Framing and rough-in progressing well. Internal fitout stage on schedule. No significant issues to report.',
-        issues: [
-          { dot: 'ok',   text: 'Works tracking ahead of programme by approximately 2 days.' },
-          { dot: 'warn', text: '3 open RFIs pending contractor response — none currently on critical path.' },
-          { dot: 'ok',   text: 'Labour resourcing adequate for current scope.' },
-        ],
-        actions: [
-          'Chase outstanding RFI responses — target closure by Week 15.',
-          'Confirm upcoming material delivery schedule with contractor.',
-          'Issue updated programme to client for Week 15 works.',
-        ],
-      },
-      emerald: {
-        name: 'Emerald',
-        meta: 'Contractor TBC · VIC · Since Mar 2026',
-        week: 'Week 14, 2026',
-        status: 'warn', label: 'At Risk',
-        kpis: [
-          { label: 'Programme Variance', val: '−5 days', cls: 'warn' },
-          { label: 'Progress',           val: '22%',     cls: 'warn' },
-          { label: 'Open Issues',        val: '4',       cls: 'warn' },
-          { label: 'Weeks Active',       val: '4',       cls: '' },
-        ],
-        prog: { pct: 22, cls: 'warn' },
-        thisWeek: 'Site establishment works largely complete. Footings poured on Lots 1–3. Contractor yet to confirm subcontractor lineup for remainder of works.',
-        issues: [
-          { dot: 'warn', text: 'Early-stage delays in site establishment and services coordination.' },
-          { dot: 'warn', text: 'Subcontractor procurement not yet finalised for two trade packages.' },
-          { dot: 'ok',   text: 'Footings and slab works progressing — no structural issues identified.' },
-        ],
-        actions: [
-          'Confirm subcontractor appointments for outstanding trade packages.',
-          'Review programme with contractor and flag risk to client.',
-          'Monitor closely — escalate to Delayed if no recovery in Week 15.',
-        ],
-      },
-      daguilar: {
-        name: "Caltex D'Aguilar",
-        meta: 'Contractor TBC · QLD · Since Dec 2025',
-        week: 'Week 14, 2026',
-        status: 'ok', label: 'On Track',
-        kpis: [
-          { label: 'Programme Variance', val: '+1 day', cls: 'ok' },
-          { label: 'Progress',           val: '79%',    cls: 'ok' },
-          { label: 'Defects Logged',     val: '6',      cls: 'warn' },
-          { label: 'Weeks Active',       val: '18',     cls: '' },
-        ],
-        prog: { pct: 79, cls: 'ok' },
-        thisWeek: "External works and landscaping complete. Internal finishes near complete. Defect identification walk-through conducted with contractor on Thu 3 Apr.",
-        issues: [
-          { dot: 'ok',   text: 'Project approaching practical completion — on track for handover.' },
-          { dot: 'warn', text: '6 defect items logged pending contractor rectification.' },
-          { dot: 'ok',   text: 'Final inspections scheduled for Week 15.' },
-        ],
-        actions: [
-          'Issue defect schedule to contractor — require rectification by Week 15.',
-          'Confirm PC inspection date and notify client.',
-          'Prepare handover documentation checklist.',
-        ],
-      },
-    };
-
-    /* DRAWER */
-    const drawer   = document.getElementById('drawer');
-    const backdrop = document.getElementById('backdrop');
-
-    function openDrawer(key) {
-      const p = projects[key];
-      if (!p) return;
-
-      document.getElementById('dName').textContent    = p.name;
-      document.getElementById('dMeta').textContent    = p.meta;
-      document.getElementById('dWeek').textContent    = p.week;
-      document.getElementById('dPillTxt').textContent = p.label;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K&K Industries — Overview</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    /* ── RESET & TOKENS ──────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:      #0d0f10;
-      --surf:    #161a1c;
-      --surf2:   #1e2426;
-      --border:  #2a3035;
-      --accent:  #e8a020;
-      --text:    #e8ecee;
-      --muted:   #7a8a92;
-      --ok:      #3ab07a;
-      --warn:    #e8a020;
-      --bad:     #d95040;
-      --drawer:  420px;
+      --bg:     #0d0f10;
+      --surf:   #161a1c;
+      --surf2:  #1e2426;
+      --border: #2a3035;
+      --accent: #e8a020;
+      --text:   #e8ecee;
+      --muted:  #7a8a92;
+      --ok:     #3ab07a;
+      --warn:   #e8a020;
+      --bad:    #d95040;
     }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg) radial-gradient(circle, #2a3035 1px, transparent 1px);
       background-size: 28px 28px;
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+      color: var(--text); min-height: 100vh;
     }
 
-    /* ── SHARED: HEADER ──────────────────────────────── */
+    /* ── HEADER ── */
     header {
-      position: sticky; top: 0; z-index: 200;
-      height: 64px; padding: 0 32px;
+      position: sticky; top: 0; z-index: 100; height: 64px; padding: 0 32px;
       background: var(--surf); border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
     }
 
-    .logo {
-      display: flex; align-items: center; gap: 12px; text-decoration: none;
-    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 
     .logo-mark {
-      width: 36px; height: 36px; border-radius: 6px;
-      background: var(--accent); color: #000;
-      font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+      width: 36px; height: 36px; border-radius: 6px; background: var(--accent);
+      color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 18px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
@@ -1317,9 +57,9 @@
     .hdr-right { display: flex; align-items: center; gap: 16px; }
 
     .live {
-      display: flex; align-items: center; gap: 6px;
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      font-weight: 500; color: var(--ok); letter-spacing: .06em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500;
+      color: var(--ok); font-family: 'DM Mono', monospace;
+      letter-spacing: .06em; text-transform: uppercase;
     }
 
     .live-dot {
@@ -1328,59 +68,242 @@
     }
 
     @keyframes pulse {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: .4; transform: scale(.8); }
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.8); }
     }
 
-    .hdr-date {
-      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
-    }
+    .hdr-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
 
-    /* ── SHARED: TABS ────────────────────────────────── */
+    /* ── PAGE ── */
+    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── TABS ── */
     .tabs {
       display: flex; gap: 4px; width: fit-content;
       background: var(--surf); border: 1px solid var(--border);
-      border-radius: 12px; padding: 5px;
-      margin-bottom: 32px;
+      border-radius: 12px; padding: 5px; margin-bottom: 32px;
     }
 
     .tab {
-      padding: 9px 22px; border-radius: 8px;
-      font-size: 13px; font-weight: 500; letter-spacing: .03em;
-      color: var(--muted); background: transparent; border: none;
-      text-decoration: none; display: inline-block; cursor: pointer;
-      transition: all .18s ease;
+      padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      color: var(--muted); border: none; background: transparent;
+      text-decoration: none; display: inline-block; transition: all .18s;
     }
 
     .tab:hover { color: var(--text); background: var(--surf2); }
-
     .tab.active { background: var(--accent); color: #000; font-weight: 600; }
 
-    /* ── SHARED: PAGE WRAPPER ────────────────────────── */
-    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+    /* ── PAGE TITLE / WEEK NAV ── */
+    .week-nav {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px; margin-bottom: 28px;
+    }
 
-    /* ── SHARED: STATUS PILL ─────────────────────────── */
+    .week-nav h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 5vw, 56px); letter-spacing: .05em; line-height: 1;
+    }
+
+    .week-nav h1 em { color: var(--accent); font-style: normal; }
+
+    .week-range { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+    .week-controls { display: flex; align-items: center; gap: 8px; }
+
+    .nav-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--surf); border: 1px solid var(--border);
+      color: var(--muted); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all .18s;
+    }
+
+    .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+
+    .nav-label {
+      font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted);
+      padding: 8px 14px; background: var(--surf); border: 1px solid var(--border);
+      border-radius: 8px; white-space: nowrap;
+    }
+
+    /* ── DAY STRIP ── */
+    .day-strip {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 28px;
+    }
+
+    .day-chip {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 10px; text-align: center;
+    }
+
+    .day-chip.today { border-color: var(--accent); }
+
+    .day-name {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .day-date {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      letter-spacing: .04em; line-height: 1;
+    }
+
+    .day-chip.today .day-date { color: var(--accent); }
+
+    .day-dots { display: flex; gap: 3px; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+
+    .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dot.ok   { background: var(--ok); }
+    .dot.warn { background: var(--warn); }
+    .dot.bad  { background: var(--bad); }
+    .dot.off  { background: var(--border); }
+
+    /* ── STATUS PILL ── */
     .pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 10px; border-radius: 99px;
-      font-size: 11px; font-weight: 600; letter-spacing: .04em;
-      text-transform: uppercase; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 99px; font-size: 11px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
     }
 
     .pill.ok   { background: rgba(58,176,122,.12);  color: var(--ok); }
     .pill.warn { background: rgba(232,160,32,.12);  color: var(--warn); }
     .pill.bad  { background: rgba(217,80,64,.12);   color: var(--bad); }
+    .pill-dot  { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
-    .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    /* ── JOB CARD ── */
+    .job-card {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 16px;
+    }
 
-    /* ── SHARED: FOOTER ──────────────────────────────── */
+    .job-card:last-child { margin-bottom: 0; }
+
+    .job-head {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+      padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .job-head-left { display: flex; align-items: center; gap: 12px; }
+
+    .status-bar { width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+    .status-bar.ok   { background: var(--ok); }
+    .status-bar.warn { background: var(--warn); }
+    .status-bar.bad  { background: var(--bad); }
+
+    .job-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: .06em; line-height: 1;
+    }
+
+    .job-location { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* two-column body */
+    .job-body { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .job-col { padding: 16px 20px; border-right: 1px solid var(--border); }
+    .job-col:last-child { border-right: none; }
+
+    .col-title {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase;
+      padding-bottom: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+
+    .job-item {
+      display: flex; gap: 8px; align-items: flex-start;
+      font-size: 13px; line-height: 1.5; margin-bottom: 7px;
+    }
+
+    .job-item:last-child { margin-bottom: 0; }
+
+    .item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 5px;
+    }
+
+    .item-dot.ok    { background: var(--ok); }
+    .item-dot.warn  { background: var(--warn); }
+    .item-dot.bad   { background: var(--bad); }
+    .item-dot.muted { background: var(--border); }
+
+    /* blocker box */
+    .blocker-box {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 13px; border-radius: 8px; margin-top: 12px;
+      background: rgba(232,160,32,.07); border: 1px solid rgba(232,160,32,.22);
+      font-size: 13px; line-height: 1.5;
+    }
+
+    .blocker-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; color: var(--warn); }
+
+    .blocker-label {
+      font-size: 10px; font-weight: 600; color: var(--warn);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px;
+    }
+
+    /* card footer */
+    .job-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+      padding: 12px 20px; border-top: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .foot-subs { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+    .foot-subs strong { color: var(--text); font-weight: 500; }
+
+    .foot-link {
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      background: none; border: none; cursor: pointer; letter-spacing: .04em;
+      transition: opacity .18s;
+    }
+
+    .foot-link:hover { opacity: .65; }
+
+    /* ── NEXT DAY PANEL ── */
+    .next-card {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-top: 24px;
+    }
+
+    .next-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--surf2);
+    }
+
+    .next-head-label {
+      font-size: 13px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .next-head-wk { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    .next-row {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+    }
+
+    .next-row:last-child { border-bottom: none; }
+
+    .next-bar { width: 4px; border-radius: 2px; flex-shrink: 0; align-self: stretch; }
+    .next-bar.ok   { background: var(--ok); }
+    .next-bar.warn { background: var(--warn); }
+    .next-bar.bad  { background: var(--bad); }
+
+    .next-proj {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .next-text { font-size: 13px; line-height: 1.55; }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border); padding: 20px 32px;
       display: flex; align-items: center; justify-content: space-between;
       font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
     }
 
-    /* ── SHARED: ANIMATIONS ──────────────────────────── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1391,298 +314,15 @@
     .a3 { animation: fadeUp .45s .16s ease both; }
     .a4 { animation: fadeUp .45s .24s ease both; }
 
-    /* ── PAGE TITLE ──────────────────────────────────── */
-    .page-title { margin-bottom: 32px; }
-
-    .page-title h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(40px, 6vw, 64px); letter-spacing: .05em; line-height: 1;
-    }
-
-    .page-title h1 em { color: var(--accent); font-style: normal; }
-
-    .page-title p { margin-top: 8px; font-size: 14px; color: var(--muted); font-weight: 300; }
-
-    /* ── KPI STRIP ───────────────────────────────────── */
-    .kpi-strip {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(155px,1fr));
-      gap: 12px; margin-bottom: 24px;
-    }
-
-    .kpi {
-      background: var(--surf); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px 18px;
-      position: relative; overflow: hidden; transition: border-color .18s;
-    }
-
-    .kpi::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--accent); opacity: 0; transition: opacity .18s;
-    }
-
-    .kpi:hover { border-color: var(--accent); }
-    .kpi:hover::before { opacity: 1; }
-
-    .kpi-label {
-      font-size: 10px; font-weight: 600; color: var(--muted);
-      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px;
-    }
-
-    .kpi-value {
-      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
-      letter-spacing: .04em; line-height: 1;
-    }
-
-    .kpi-value.ok  { color: var(--ok); }
-    .kpi-value.bad { color: var(--bad); }
-    .kpi-value.warn { color: var(--warn); }
-
-    .kpi-sub {
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      color: var(--muted); margin-top: 5px;
-    }
-
-    /* ── PROJECT TABLE ───────────────────────────────── */
-    .card {
-      background: var(--surf); border: 1px solid var(--border); border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .card-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 22px; background: var(--surf2); border-bottom: 1px solid var(--border);
-    }
-
-    .card-head-label {
-      font-size: 13px; font-weight: 600; letter-spacing: .06em;
-      text-transform: uppercase; color: var(--muted);
-    }
-
-    .card-head-action {
-      font-size: 12px; color: var(--accent); font-weight: 500;
-      background: none; border: none; cursor: pointer; letter-spacing: .04em;
-      transition: opacity .18s;
-    }
-
-    .card-head-action:hover { opacity: .65; }
-
-    /* project row */
-    .proj-row {
-      display: grid; grid-template-columns: 1fr auto auto auto;
-      align-items: center; gap: 16px; padding: 17px 22px;
-      border-bottom: 1px solid var(--border); cursor: pointer;
-      transition: background .12s;
-    }
-
-    .proj-row:last-child { border-bottom: none; }
-    .proj-row:hover { background: var(--surf2); }
-    .proj-row:hover .row-caret { opacity: 1; transform: translateX(0); }
-    .proj-row.active { background: var(--surf2); border-left: 3px solid var(--accent); }
-
-    .proj-name { font-size: 15px; font-weight: 500; }
-
-    .proj-meta {
-      font-family: 'DM Mono', monospace; font-size: 12px;
-      color: var(--muted); margin-top: 3px;
-    }
-
-    .prog-col { width: 120px; }
-
-    .prog-labels {
-      display: flex; justify-content: space-between;
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      color: var(--muted); margin-bottom: 5px;
-    }
-
-    .prog-track {
-      height: 5px; background: var(--surf2); border-radius: 99px; overflow: hidden;
-    }
-
-    .prog-fill {
-      height: 100%; border-radius: 99px;
-      transition: width .8s cubic-bezier(.16,1,.3,1);
-    }
-
-    .prog-fill.ok   { background: var(--ok); }
-    .prog-fill.warn { background: var(--warn); }
-    .prog-fill.bad  { background: var(--bad); }
-
-    .row-caret {
-      font-size: 18px; color: var(--muted);
-      opacity: 0; transform: translateX(-4px); transition: all .18s;
-    }
-
-    /* ── DRAWER ──────────────────────────────────────── */
-    .backdrop {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.55); backdrop-filter: blur(2px);
-      z-index: 300; opacity: 0; pointer-events: none; transition: opacity .28s;
-    }
-
-    .backdrop.open { opacity: 1; pointer-events: all; }
-
-    .drawer {
-      position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer);
-      background: var(--surf); border-left: 1px solid var(--border);
-      z-index: 400; display: flex; flex-direction: column; overflow: hidden;
-      transform: translateX(100%);
-      transition: transform .32s cubic-bezier(.16,1,.3,1);
-    }
-
-    .drawer.open { transform: translateX(0); }
-
-    /* drawer header */
-    .drw-head {
-      padding: 20px 24px 18px; flex-shrink: 0;
-      background: var(--surf2); border-bottom: 1px solid var(--border);
-    }
-
-    .drw-close {
-      display: flex; align-items: center; gap: 7px; margin-bottom: 14px;
-      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
-      letter-spacing: .06em; text-transform: uppercase;
-      background: none; border: none; cursor: pointer; transition: color .15s;
-    }
-
-    .drw-close:hover { color: var(--text); }
-
-    .drw-close svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-    .drw-name {
-      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
-      letter-spacing: .06em; line-height: 1.1;
-    }
-
-    .drw-meta {
-      font-family: 'DM Mono', monospace; font-size: 12px;
-      color: var(--muted); margin-top: 4px;
-    }
-
-    .drw-status-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
-
-    .drw-week {
-      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
-    }
-
-    /* drawer body */
-    .drw-body {
-      flex: 1; overflow-y: auto; padding: 20px 24px;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-
-    .drw-body::-webkit-scrollbar { width: 4px; }
-    .drw-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    /* drawer sections */
-    .drw-sec { margin-bottom: 22px; }
-
-    .drw-sec-title {
-      font-size: 10px; font-weight: 600; color: var(--muted);
-      letter-spacing: .12em; text-transform: uppercase;
-      padding-bottom: 8px; margin-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* kpi grid in drawer */
-    .drw-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-    .drw-kpi {
-      background: var(--surf2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 11px 13px;
-    }
-
-    .drw-kpi-label {
-      font-size: 10px; color: var(--muted); letter-spacing: .08em;
-      text-transform: uppercase; margin-bottom: 4px;
-    }
-
-    .drw-kpi-val {
-      font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500;
-    }
-
-    .drw-kpi-val.ok  { color: var(--ok); }
-    .drw-kpi-val.warn { color: var(--warn); }
-    .drw-kpi-val.bad { color: var(--bad); }
-
-    /* progress in drawer */
-    .drw-prog-labels {
-      display: flex; justify-content: space-between;
-      font-family: 'DM Mono', monospace; font-size: 12px;
-      color: var(--muted); margin-bottom: 6px;
-    }
-
-    .drw-prog-track {
-      height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden;
-    }
-
-    .drw-prog-fill {
-      height: 100%; border-radius: 99px;
-      transition: width .9s cubic-bezier(.16,1,.3,1);
-    }
-
-    .drw-prog-fill.ok   { background: var(--ok); }
-    .drw-prog-fill.warn { background: var(--warn); }
-    .drw-prog-fill.bad  { background: var(--bad); }
-
-    /* item rows in drawer */
-    .drw-item {
-      display: flex; gap: 9px; align-items: flex-start;
-      padding: 10px 12px; border-radius: 8px; margin-bottom: 7px;
-      font-size: 13px; line-height: 1.5;
-      background: var(--surf2); border: 1px solid var(--border);
-    }
-
-    .drw-item:last-child { margin-bottom: 0; }
-
-    .drw-item-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      flex-shrink: 0; margin-top: 5px;
-    }
-
-    .drw-item-dot.ok   { background: var(--ok); }
-    .drw-item-dot.warn { background: var(--warn); }
-    .drw-item-dot.bad  { background: var(--bad); }
-
-    /* action rows in drawer */
-    .drw-action {
-      display: flex; gap: 9px; align-items: flex-start;
-      padding: 10px 12px; border-radius: 8px; margin-bottom: 7px;
-      font-size: 13px; line-height: 1.5;
-      background: rgba(232,160,32,.06); border: 1px solid rgba(232,160,32,.2);
-    }
-
-    .drw-action:last-child { margin-bottom: 0; }
-
-    .drw-action-n {
-      font-family: 'DM Mono', monospace; font-size: 11px;
-      color: var(--accent); font-weight: 500; flex-shrink: 0; margin-top: 1px;
-    }
-
-    /* drawer footer */
-    .drw-foot {
-      padding: 14px 24px; border-top: 1px solid var(--border);
-      flex-shrink: 0; display: flex; gap: 10px;
-    }
-
-    .drw-btn {
-      flex: 1; padding: 10px; border-radius: 8px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      border: none; transition: opacity .18s; letter-spacing: .02em;
-    }
-
-    .drw-btn:hover { opacity: .75; }
-    .drw-btn.primary { background: var(--accent); color: #000; }
-    .drw-btn.ghost   { background: var(--surf2); color: var(--muted); border: 1px solid var(--border); }
-
-    /* ── RESPONSIVE ──────────────────────────────────── */
-    @media (max-width: 600px) {
-      :root { --drawer: 100vw; }
+    @media (max-width: 680px) {
       header, footer { padding-left: 16px; padding-right: 16px; }
       .page { padding: 24px 16px 60px; }
-      .proj-row { grid-template-columns: 1fr auto auto; }
-      .prog-col { display: none; }
-      .kpi-strip { grid-template-columns: 1fr 1fr; }
+      .job-body { grid-template-columns: 1fr; }
+      .job-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .job-col:last-child { border-bottom: none; }
+      .week-nav { flex-direction: column; align-items: flex-start; }
       .tab { padding: 8px 14px; font-size: 12px; }
+      .day-strip { grid-template-columns: repeat(5,1fr); gap: 5px; }
     }
   </style>
 </head>
@@ -1704,98 +344,26 @@
 
   <div class="page">
 
-    <div class="page-title a1">
-      <h1>Project <em>Overview</em></h1>
-      <p>Weekly site performance snapshots across all active projects</p>
-    </div>
-
-    <nav class="tabs a2">
-      <a class="tab active" href="index.html">Overview</a>
-      <a class="tab" href="weekly.html">Weekly</a>
+    <nav class="tabs a1">
+      <a class="tab active" href="index.html">Weekly</a>
       <a class="tab" href="monthly.html">Monthly</a>
     </nav>
 
-    <div class="kpi-strip a3">
-      <div class="kpi">
-        <div class="kpi-label">Active Sites</div>
-        <div class="kpi-value">04</div>
-        <div class="kpi-sub">↑ 1 from last week</div>
+    <div class="week-nav a2">
+      <div>
+        <h1>Week <em id="wkNum"></em> Snapshot</h1>
+        <div class="week-range" id="wkRange"></div>
       </div>
-      <div class="kpi">
-        <div class="kpi-label">On Track</div>
-        <div class="kpi-value ok">02</div>
-        <div class="kpi-sub">50% of portfolio</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">At Risk</div>
-        <div class="kpi-value warn">01</div>
-        <div class="kpi-sub">Monitoring closely</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Delayed</div>
-        <div class="kpi-value bad">01</div>
-        <div class="kpi-sub">Action required</div>
+      <div class="week-controls">
+        <button class="nav-btn" id="btnPrev">‹</button>
+        <div class="nav-label" id="wkLabel"></div>
+        <button class="nav-btn" id="btnNext">›</button>
       </div>
     </div>
 
-    <div class="card a4">
-      <div class="card-head">
-        <span class="card-head-label">Active Projects — Week 14, 2026</span>
-        <button class="card-head-action">Export ↗</button>
-      </div>
-
-      <div class="proj-row" data-id="childers">
-        <div>
-          <div class="proj-name">Pearl Energy Childers</div>
-          <div class="proj-meta">Ktori Group · QLD · Since Jan 2026</div>
-        </div>
-        <div class="prog-col">
-          <div class="prog-labels"><span>Progress</span><span>38%</span></div>
-          <div class="prog-track"><div class="prog-fill bad" data-w="38"></div></div>
-        </div>
-        <div class="pill bad"><div class="pill-dot"></div>Delayed</div>
-        <div class="row-caret">›</div>
-      </div>
-
-      <div class="proj-row" data-id="williamstown">
-        <div>
-          <div class="proj-name">Exus Williamstown</div>
-          <div class="proj-meta">Contractor TBC · VIC · Since Feb 2026</div>
-        </div>
-        <div class="prog-col">
-          <div class="prog-labels"><span>Progress</span><span>61%</span></div>
-          <div class="prog-track"><div class="prog-fill ok" data-w="61"></div></div>
-        </div>
-        <div class="pill ok"><div class="pill-dot"></div>On Track</div>
-        <div class="row-caret">›</div>
-      </div>
-
-      <div class="proj-row" data-id="emerald">
-        <div>
-          <div class="proj-name">Emerald</div>
-          <div class="proj-meta">Contractor TBC · VIC · Since Mar 2026</div>
-        </div>
-        <div class="prog-col">
-          <div class="prog-labels"><span>Progress</span><span>22%</span></div>
-          <div class="prog-track"><div class="prog-fill warn" data-w="22"></div></div>
-        </div>
-        <div class="pill warn"><div class="pill-dot"></div>At Risk</div>
-        <div class="row-caret">›</div>
-      </div>
-
-      <div class="proj-row" data-id="daguilar">
-        <div>
-          <div class="proj-name">Caltex D'Aguilar</div>
-          <div class="proj-meta">Contractor TBC · QLD · Since Dec 2025</div>
-        </div>
-        <div class="prog-col">
-          <div class="prog-labels"><span>Progress</span><span>79%</span></div>
-          <div class="prog-track"><div class="prog-fill ok" data-w="79"></div></div>
-        </div>
-        <div class="pill ok"><div class="pill-dot"></div>On Track</div>
-        <div class="row-caret">›</div>
-      </div>
-    </div>
+    <div class="day-strip a3" id="dayStrip"></div>
+    <div id="jobGrid" class="a4"></div>
+    <div id="nextPanel"></div>
 
   </div>
 
@@ -1804,227 +372,132 @@
     <span id="ftrTime"></span>
   </footer>
 
-  <!-- BACKDROP + DRAWER -->
-  <div class="backdrop" id="backdrop"></div>
-
-  <div class="drawer" id="drawer">
-    <div class="drw-head">
-      <button class="drw-close" id="btnClose">
-        <svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg>
-        Close
-      </button>
-      <div class="drw-name" id="dName"></div>
-      <div class="drw-meta" id="dMeta"></div>
-      <div class="drw-status-row">
-        <div class="pill" id="dPill"><div class="pill-dot"></div><span id="dPillTxt"></span></div>
-        <span class="drw-week" id="dWeek"></span>
-      </div>
-    </div>
-    <div class="drw-body" id="dBody"></div>
-    <div class="drw-foot">
-      <button class="drw-btn primary">Open Full Report ↗</button>
-      <button class="drw-btn ghost" id="btnClose2">Close</button>
-    </div>
-  </div>
-
+  <script src="data/weekly.js"></script>
   <script>
-    /* ── CLOCK ─────────────────────────────────────── */
+    /* CLOCK */
     const fmtDate = d => d.toLocaleDateString('en-AU',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-    const fmtTime = d => d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
     const tick = () => {
       const n = new Date();
       document.getElementById('hdrDate').textContent = fmtDate(n);
-      document.getElementById('ftrTime').textContent = 'Last updated ' + fmtTime(n);
+      document.getElementById('ftrTime').textContent = 'Last updated ' + n.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
     };
     tick(); setInterval(tick, 30000);
 
-    /* ── PROGRESS BARS ─────────────────────────────── */
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.prog-fill').forEach(b => {
-        const w = b.dataset.w;
-        b.style.width = '0%';
-        setTimeout(() => { b.style.width = w + '%'; }, 180);
-      });
-    });
+    /* STATUS */
+    function cls(s) {
+      if (s === 'Behind')  return 'bad';
+      if (s === 'At Risk') return 'warn';
+      return 'ok';
+    }
 
-    /* ── PROJECT DATA ──────────────────────────────── */
-    const DATA = {
-      childers: {
-        name: 'Pearl Energy Childers', meta: 'Ktori Group · QLD · Since Jan 2026',
-        week: 'Week 14, 2026', status: 'bad', label: 'Delayed',
-        kpis: [
-          { label:'Programme Delay', val:'15–20 days', cls:'bad' },
-          { label:'Progress',        val:'38%',        cls:'bad' },
-          { label:'Contractor Claim',val:'2 days',     cls:'warn' },
-          { label:'Weeks Active',    val:'13',          cls:'' },
-        ],
-        prog: { pct:38, cls:'bad' },
-        thisWeek: 'No concrete works commenced. Site preparation activities ongoing. Daily diary logs reviewed — no change to critical path status.',
-        issues: [
-          { cls:'bad',  t:'Brucon (concrete subcontractor) has not mobilised — critical path impact.' },
-          { cls:'bad',  t:'Contractor-reported delay of 2 days understates actual programme loss of 15–20 WDs.' },
-          { cls:'warn', t:'Slab and structural steel cannot commence until Brucon is on site.' },
-          { cls:'warn', t:'No revised programme received from contractor.' },
-        ],
-        actions: [
-          'Demand written confirmation from Ktori Group on Brucon mobilisation date.',
-          'Request revised programme by end of this week.',
-          'Issue formal delay notice if mobilisation not confirmed within 48 hrs.',
-          'Update client on corrected delay assessment — 15–20 WDs, not 2.',
-        ],
-      },
-      williamstown: {
-        name: 'Exus Williamstown', meta: 'Contractor TBC · VIC · Since Feb 2026',
-        week: 'Week 14, 2026', status: 'ok', label: 'On Track',
-        kpis: [
-          { label:'Programme Variance', val:'+2 days', cls:'ok' },
-          { label:'Progress',           val:'61%',     cls:'ok' },
-          { label:'Open RFIs',          val:'3',       cls:'warn' },
-          { label:'Weeks Active',       val:'8',       cls:'' },
-        ],
-        prog: { pct:61, cls:'ok' },
-        thisWeek: 'Framing and rough-in progressing well. Internal fitout stage on schedule. No significant issues to report.',
-        issues: [
-          { cls:'ok',   t:'Works tracking ahead of programme by approximately 2 days.' },
-          { cls:'warn', t:'3 open RFIs pending — none currently on critical path.' },
-          { cls:'ok',   t:'Labour resourcing adequate for current scope.' },
-        ],
-        actions: [
-          'Chase outstanding RFI responses — target closure by Week 15.',
-          'Confirm upcoming material delivery schedule with contractor.',
-          'Issue updated programme to client for Week 15 works.',
-        ],
-      },
-      emerald: {
-        name: 'Emerald', meta: 'Contractor TBC · VIC · Since Mar 2026',
-        week: 'Week 14, 2026', status: 'warn', label: 'At Risk',
-        kpis: [
-          { label:'Programme Variance', val:'−5 days', cls:'warn' },
-          { label:'Progress',           val:'22%',     cls:'warn' },
-          { label:'Open Issues',        val:'4',       cls:'warn' },
-          { label:'Weeks Active',       val:'4',       cls:'' },
-        ],
-        prog: { pct:22, cls:'warn' },
-        thisWeek: 'Site establishment largely complete. Footings poured Lots 1–3. Contractor yet to confirm subcontractor lineup for remaining works.',
-        issues: [
-          { cls:'warn', t:'Early-stage delays in site establishment and services coordination.' },
-          { cls:'warn', t:'Subcontractor procurement not finalised for two trade packages.' },
-          { cls:'ok',   t:'Footings and slab works progressing — no structural issues.' },
-        ],
-        actions: [
-          'Confirm subcontractor appointments for outstanding packages.',
-          'Review programme with contractor and flag risk to client.',
-          'Escalate to Delayed status if no recovery by Week 15.',
-        ],
-      },
-      daguilar: {
-        name: "Caltex D'Aguilar", meta: 'Contractor TBC · QLD · Since Dec 2025',
-        week: 'Week 14, 2026', status: 'ok', label: 'On Track',
-        kpis: [
-          { label:'Programme Variance', val:'+1 day', cls:'ok' },
-          { label:'Progress',           val:'79%',    cls:'ok' },
-          { label:'Defects Logged',     val:'6',      cls:'warn' },
-          { label:'Weeks Active',       val:'18',     cls:'' },
-        ],
-        prog: { pct:79, cls:'ok' },
-        thisWeek: 'External works and landscaping complete. Internal finishes near complete. Defect walk-through conducted with contractor Thu 3 Apr.',
-        issues: [
-          { cls:'ok',   t:'Project approaching PC — on track for handover.' },
-          { cls:'warn', t:'6 defect items logged pending contractor rectification.' },
-          { cls:'ok',   t:'Final inspections scheduled for Week 15.' },
-        ],
-        actions: [
-          'Issue defect schedule — rectification required by Week 15.',
-          'Confirm PC inspection date and notify client.',
-          'Prepare handover documentation checklist.',
-        ],
-      },
-    };
+    /* RENDER */
+    const keys = Object.keys(WEEKS).map(Number).sort((a,b) => b - a); // newest first
+    let cur = keys[0];
 
-    /* ── DRAWER ────────────────────────────────────── */
-    const drawer   = document.getElementById('drawer');
-    const backdrop = document.getElementById('backdrop');
+    function render(wk) {
+      const d = WEEKS[wk];
 
-    function openDrawer(id) {
-      const p = DATA[id]; if (!p) return;
+      document.getElementById('wkNum').textContent   = wk;
+      document.getElementById('wkRange').textContent = d.range;
+      document.getElementById('wkLabel').textContent = `Week ${wk} · 2026`;
+      document.getElementById('btnPrev').disabled    = (wk === Math.min(...keys));
+      document.getElementById('btnNext').disabled    = (wk === Math.max(...keys));
 
-      document.getElementById('dName').textContent    = p.name;
-      document.getElementById('dMeta').textContent    = p.meta;
-      document.getElementById('dWeek').textContent    = p.week;
-      document.getElementById('dPillTxt').textContent = p.label;
-      document.getElementById('dPill').className      = 'pill ' + p.status;
-
-      document.getElementById('dBody').innerHTML = `
-        <div class="drw-sec">
-          <div class="drw-sec-title">This Week</div>
-          <div class="drw-item"><div class="drw-item-dot ok"></div><span>${p.thisWeek}</span></div>
+      /* Day strip */
+      document.getElementById('dayStrip').innerHTML = d.days.map(day => `
+        <div class="day-chip${day.today ? ' today' : ''}">
+          <div class="day-name">${day.name}</div>
+          <div class="day-date">${day.date}</div>
+          <div class="day-dots">${day.dots.map(c => `<div class="dot ${c}"></div>`).join('')}</div>
         </div>
+      `).join('');
 
-        <div class="drw-sec">
-          <div class="drw-sec-title">Key Metrics</div>
-          <div class="drw-kpis">
-            ${p.kpis.map(k=>`
-              <div class="drw-kpi">
-                <div class="drw-kpi-label">${k.label}</div>
-                <div class="drw-kpi-val ${k.cls}">${k.val}</div>
-              </div>`).join('')}
+      /* Job cards */
+      document.getElementById('jobGrid').innerHTML = d.jobs.map(j => {
+        const c       = cls(j.programmeStatus);
+        const hasSub  = j.subcontractorIssues && j.subcontractorIssues !== 'None';
+        const hasMat  = j.materialIssues      && j.materialIssues      !== 'None';
+        const hasBlk  = j.holdingUp           && j.holdingUp           !== 'None';
+
+        return `
+        <div class="job-card">
+          <div class="job-head">
+            <div class="job-head-left">
+              <div class="status-bar ${c}"></div>
+              <div>
+                <div class="job-name">${j.name}</div>
+                <div class="job-location">${j.location}</div>
+              </div>
+            </div>
+            <div class="pill ${c}"><div class="pill-dot"></div>${j.programmeStatus}</div>
           </div>
-        </div>
 
-        <div class="drw-sec">
-          <div class="drw-sec-title">Overall Progress</div>
-          <div class="drw-prog-labels"><span>Completion</span><span>${p.prog.pct}%</span></div>
-          <div class="drw-prog-track">
-            <div class="drw-prog-fill ${p.prog.cls}" style="width:0%" data-w="${p.prog.pct}"></div>
+          <div class="job-body">
+            <div class="job-col">
+              <div class="col-title">Work Areas</div>
+              ${j.workAreas.map(w => `
+                <div class="job-item"><div class="item-dot muted"></div><span>${w}</span></div>
+              `).join('')}
+              <div class="col-title" style="margin-top:16px">Activity</div>
+              ${j.activity.map(a => `
+                <div class="job-item"><div class="item-dot ok"></div><span>${a}</span></div>
+              `).join('')}
+            </div>
+
+            <div class="job-col">
+              <div class="col-title">Issues</div>
+              ${hasSub
+                ? `<div class="job-item"><div class="item-dot bad"></div><span><strong>Subcontractor —</strong> ${j.subcontractorIssues}</span></div>`
+                : `<div class="job-item"><div class="item-dot ok"></div><span style="color:var(--muted)">No subcontractor issues</span></div>`
+              }
+              ${hasMat
+                ? `<div class="job-item"><div class="item-dot warn"></div><span><strong>Materials —</strong> ${j.materialIssues}</span></div>`
+                : `<div class="job-item"><div class="item-dot ok"></div><span style="color:var(--muted)">No material issues</span></div>`
+              }
+              ${hasBlk ? `
+                <div class="blocker-box">
+                  <div class="blocker-icon">⚠</div>
+                  <div>
+                    <div class="blocker-label">Holding Up — ${j.holdingUp}</div>
+                    <div>${j.holdingUpDetail}</div>
+                  </div>
+                </div>` : ''}
+            </div>
           </div>
-        </div>
 
-        <div class="drw-sec">
-          <div class="drw-sec-title">Issues &amp; Observations</div>
-          ${p.issues.map(i=>`
-            <div class="drw-item">
-              <div class="drw-item-dot ${i.cls}"></div><span>${i.t}</span>
-            </div>`).join('')}
-        </div>
+          <div class="job-foot">
+            <div class="foot-subs">On site: <strong>${j.subcontractors}</strong></div>
+            <button class="foot-link">Full Report ↗</button>
+          </div>
+        </div>`;
+      }).join('');
 
-        <div class="drw-sec">
-          <div class="drw-sec-title">Actions Required</div>
-          ${p.actions.map((a,i)=>`
-            <div class="drw-action">
-              <span class="drw-action-n">${String(i+1).padStart(2,'0')}</span><span>${a}</span>
-            </div>`).join('')}
+      /* Next day panel */
+      document.getElementById('nextPanel').innerHTML = `
+        <div class="next-card">
+          <div class="next-head">
+            <span class="next-head-label">Next Day — Planned Works</span>
+            <span class="next-head-wk">Week ${wk}</span>
+          </div>
+          ${d.jobs.map(j => `
+            <div class="next-row">
+              <div class="next-bar ${cls(j.programmeStatus)}"></div>
+              <div>
+                <div class="next-proj">${j.name}</div>
+                <div class="next-text">${j.nextDay}</div>
+              </div>
+            </div>
+          `).join('')}
         </div>
       `;
-
-      document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('active'));
-      document.querySelector(`[data-id="${id}"]`).classList.add('active');
-
-      drawer.classList.add('open');
-      backdrop.classList.add('open');
-      document.getElementById('dBody').scrollTop = 0;
-
-      requestAnimationFrame(() => setTimeout(() => {
-        document.querySelectorAll('.drw-prog-fill').forEach(b => {
-          b.style.width = b.dataset.w + '%';
-        });
-      }, 60));
     }
 
-    function closeDrawer() {
-      drawer.classList.remove('open');
-      backdrop.classList.remove('open');
-      document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('active'));
-    }
+    render(cur);
 
-    document.querySelectorAll('.proj-row').forEach(r =>
-      r.addEventListener('click', () => openDrawer(r.dataset.id))
-    );
-
-    document.getElementById('btnClose').addEventListener('click',  closeDrawer);
-    document.getElementById('btnClose2').addEventListener('click', closeDrawer);
-    backdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', e => e.key === 'Escape' && closeDrawer());
+    document.getElementById('btnPrev').addEventListener('click', () => { if (WEEKS[cur-1]) { cur--; render(cur); } });
+    document.getElementById('btnNext').addEventListener('click', () => { if (WEEKS[cur+1]) { cur++; render(cur); } });
   </script>
 
 </body>
 </html>
+
