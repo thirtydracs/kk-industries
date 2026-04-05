@@ -1250,89 +1250,780 @@
       document.getElementById('dMeta').textContent    = p.meta;
       document.getElementById('dWeek').textContent    = p.week;
       document.getElementById('dPillTxt').textContent = p.label;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K&K Industries — Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET & TOKENS ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      const pill = document.getElementById('dPill');
-      pill.className = 'status-pill ' + p.status;
+    :root {
+      --bg:      #0d0f10;
+      --surf:    #161a1c;
+      --surf2:   #1e2426;
+      --border:  #2a3035;
+      --accent:  #e8a020;
+      --text:    #e8ecee;
+      --muted:   #7a8a92;
+      --ok:      #3ab07a;
+      --warn:    #e8a020;
+      --bad:     #d95040;
+      --drawer:  420px;
+    }
 
-      const body = document.getElementById('drawerBody');
-      body.innerHTML = `
-        <div class="d-section">
-          <div class="d-section-title">This Week</div>
-          <div class="d-issue">
-            <div class="d-issue-dot ok"></div>
-            <span>${p.thisWeek}</span>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg) radial-gradient(circle, #2a3035 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── SHARED: HEADER ──────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      height: 64px; padding: 0 32px;
+      background: var(--surf); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 6px;
+      background: var(--accent); color: #000;
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .logo-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: .08em; color: var(--text); line-height: 1;
+    }
+
+    .logo-sub {
+      font-size: 11px; color: var(--muted); letter-spacing: .12em;
+      text-transform: uppercase; margin-top: 2px;
+    }
+
+    .hdr-right { display: flex; align-items: center; gap: 16px; }
+
+    .live {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      font-weight: 500; color: var(--ok); letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--ok);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .4; transform: scale(.8); }
+    }
+
+    .hdr-date {
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+
+    /* ── SHARED: TABS ────────────────────────────────── */
+    .tabs {
+      display: flex; gap: 4px; width: fit-content;
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 12px; padding: 5px;
+      margin-bottom: 32px;
+    }
+
+    .tab {
+      padding: 9px 22px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; letter-spacing: .03em;
+      color: var(--muted); background: transparent; border: none;
+      text-decoration: none; display: inline-block; cursor: pointer;
+      transition: all .18s ease;
+    }
+
+    .tab:hover { color: var(--text); background: var(--surf2); }
+
+    .tab.active { background: var(--accent); color: #000; font-weight: 600; }
+
+    /* ── SHARED: PAGE WRAPPER ────────────────────────── */
+    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── SHARED: STATUS PILL ─────────────────────────── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 600; letter-spacing: .04em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+
+    .pill.ok   { background: rgba(58,176,122,.12);  color: var(--ok); }
+    .pill.warn { background: rgba(232,160,32,.12);  color: var(--warn); }
+    .pill.bad  { background: rgba(217,80,64,.12);   color: var(--bad); }
+
+    .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    /* ── SHARED: FOOTER ──────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border); padding: 20px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+
+    /* ── SHARED: ANIMATIONS ──────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .a1 { animation: fadeUp .45s ease both; }
+    .a2 { animation: fadeUp .45s .08s ease both; }
+    .a3 { animation: fadeUp .45s .16s ease both; }
+    .a4 { animation: fadeUp .45s .24s ease both; }
+
+    /* ── PAGE TITLE ──────────────────────────────────── */
+    .page-title { margin-bottom: 32px; }
+
+    .page-title h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 6vw, 64px); letter-spacing: .05em; line-height: 1;
+    }
+
+    .page-title h1 em { color: var(--accent); font-style: normal; }
+
+    .page-title p { margin-top: 8px; font-size: 14px; color: var(--muted); font-weight: 300; }
+
+    /* ── KPI STRIP ───────────────────────────────────── */
+    .kpi-strip {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(155px,1fr));
+      gap: 12px; margin-bottom: 24px;
+    }
+
+    .kpi {
+      background: var(--surf); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px;
+      position: relative; overflow: hidden; transition: border-color .18s;
+    }
+
+    .kpi::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); opacity: 0; transition: opacity .18s;
+    }
+
+    .kpi:hover { border-color: var(--accent); }
+    .kpi:hover::before { opacity: 1; }
+
+    .kpi-label {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+      letter-spacing: .04em; line-height: 1;
+    }
+
+    .kpi-value.ok  { color: var(--ok); }
+    .kpi-value.bad { color: var(--bad); }
+    .kpi-value.warn { color: var(--warn); }
+
+    .kpi-sub {
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--muted); margin-top: 5px;
+    }
+
+    /* ── PROJECT TABLE ───────────────────────────────── */
+    .card {
+      background: var(--surf); border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 22px; background: var(--surf2); border-bottom: 1px solid var(--border);
+    }
+
+    .card-head-label {
+      font-size: 13px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .card-head-action {
+      font-size: 12px; color: var(--accent); font-weight: 500;
+      background: none; border: none; cursor: pointer; letter-spacing: .04em;
+      transition: opacity .18s;
+    }
+
+    .card-head-action:hover { opacity: .65; }
+
+    /* project row */
+    .proj-row {
+      display: grid; grid-template-columns: 1fr auto auto auto;
+      align-items: center; gap: 16px; padding: 17px 22px;
+      border-bottom: 1px solid var(--border); cursor: pointer;
+      transition: background .12s;
+    }
+
+    .proj-row:last-child { border-bottom: none; }
+    .proj-row:hover { background: var(--surf2); }
+    .proj-row:hover .row-caret { opacity: 1; transform: translateX(0); }
+    .proj-row.active { background: var(--surf2); border-left: 3px solid var(--accent); }
+
+    .proj-name { font-size: 15px; font-weight: 500; }
+
+    .proj-meta {
+      font-family: 'DM Mono', monospace; font-size: 12px;
+      color: var(--muted); margin-top: 3px;
+    }
+
+    .prog-col { width: 120px; }
+
+    .prog-labels {
+      display: flex; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--muted); margin-bottom: 5px;
+    }
+
+    .prog-track {
+      height: 5px; background: var(--surf2); border-radius: 99px; overflow: hidden;
+    }
+
+    .prog-fill {
+      height: 100%; border-radius: 99px;
+      transition: width .8s cubic-bezier(.16,1,.3,1);
+    }
+
+    .prog-fill.ok   { background: var(--ok); }
+    .prog-fill.warn { background: var(--warn); }
+    .prog-fill.bad  { background: var(--bad); }
+
+    .row-caret {
+      font-size: 18px; color: var(--muted);
+      opacity: 0; transform: translateX(-4px); transition: all .18s;
+    }
+
+    /* ── DRAWER ──────────────────────────────────────── */
+    .backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55); backdrop-filter: blur(2px);
+      z-index: 300; opacity: 0; pointer-events: none; transition: opacity .28s;
+    }
+
+    .backdrop.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer);
+      background: var(--surf); border-left: 1px solid var(--border);
+      z-index: 400; display: flex; flex-direction: column; overflow: hidden;
+      transform: translateX(100%);
+      transition: transform .32s cubic-bezier(.16,1,.3,1);
+    }
+
+    .drawer.open { transform: translateX(0); }
+
+    /* drawer header */
+    .drw-head {
+      padding: 20px 24px 18px; flex-shrink: 0;
+      background: var(--surf2); border-bottom: 1px solid var(--border);
+    }
+
+    .drw-close {
+      display: flex; align-items: center; gap: 7px; margin-bottom: 14px;
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+      letter-spacing: .06em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer; transition: color .15s;
+    }
+
+    .drw-close:hover { color: var(--text); }
+
+    .drw-close svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    .drw-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      letter-spacing: .06em; line-height: 1.1;
+    }
+
+    .drw-meta {
+      font-family: 'DM Mono', monospace; font-size: 12px;
+      color: var(--muted); margin-top: 4px;
+    }
+
+    .drw-status-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+
+    .drw-week {
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+
+    /* drawer body */
+    .drw-body {
+      flex: 1; overflow-y: auto; padding: 20px 24px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+
+    .drw-body::-webkit-scrollbar { width: 4px; }
+    .drw-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* drawer sections */
+    .drw-sec { margin-bottom: 22px; }
+
+    .drw-sec-title {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .12em; text-transform: uppercase;
+      padding-bottom: 8px; margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* kpi grid in drawer */
+    .drw-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .drw-kpi {
+      background: var(--surf2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 13px;
+    }
+
+    .drw-kpi-label {
+      font-size: 10px; color: var(--muted); letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .drw-kpi-val {
+      font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500;
+    }
+
+    .drw-kpi-val.ok  { color: var(--ok); }
+    .drw-kpi-val.warn { color: var(--warn); }
+    .drw-kpi-val.bad { color: var(--bad); }
+
+    /* progress in drawer */
+    .drw-prog-labels {
+      display: flex; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 12px;
+      color: var(--muted); margin-bottom: 6px;
+    }
+
+    .drw-prog-track {
+      height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden;
+    }
+
+    .drw-prog-fill {
+      height: 100%; border-radius: 99px;
+      transition: width .9s cubic-bezier(.16,1,.3,1);
+    }
+
+    .drw-prog-fill.ok   { background: var(--ok); }
+    .drw-prog-fill.warn { background: var(--warn); }
+    .drw-prog-fill.bad  { background: var(--bad); }
+
+    /* item rows in drawer */
+    .drw-item {
+      display: flex; gap: 9px; align-items: flex-start;
+      padding: 10px 12px; border-radius: 8px; margin-bottom: 7px;
+      font-size: 13px; line-height: 1.5;
+      background: var(--surf2); border: 1px solid var(--border);
+    }
+
+    .drw-item:last-child { margin-bottom: 0; }
+
+    .drw-item-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 5px;
+    }
+
+    .drw-item-dot.ok   { background: var(--ok); }
+    .drw-item-dot.warn { background: var(--warn); }
+    .drw-item-dot.bad  { background: var(--bad); }
+
+    /* action rows in drawer */
+    .drw-action {
+      display: flex; gap: 9px; align-items: flex-start;
+      padding: 10px 12px; border-radius: 8px; margin-bottom: 7px;
+      font-size: 13px; line-height: 1.5;
+      background: rgba(232,160,32,.06); border: 1px solid rgba(232,160,32,.2);
+    }
+
+    .drw-action:last-child { margin-bottom: 0; }
+
+    .drw-action-n {
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--accent); font-weight: 500; flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* drawer footer */
+    .drw-foot {
+      padding: 14px 24px; border-top: 1px solid var(--border);
+      flex-shrink: 0; display: flex; gap: 10px;
+    }
+
+    .drw-btn {
+      flex: 1; padding: 10px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: none; transition: opacity .18s; letter-spacing: .02em;
+    }
+
+    .drw-btn:hover { opacity: .75; }
+    .drw-btn.primary { background: var(--accent); color: #000; }
+    .drw-btn.ghost   { background: var(--surf2); color: var(--muted); border: 1px solid var(--border); }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 600px) {
+      :root { --drawer: 100vw; }
+      header, footer { padding-left: 16px; padding-right: 16px; }
+      .page { padding: 24px 16px 60px; }
+      .proj-row { grid-template-columns: 1fr auto auto; }
+      .prog-col { display: none; }
+      .kpi-strip { grid-template-columns: 1fr 1fr; }
+      .tab { padding: 8px 14px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">
+      <div class="logo-mark">KK</div>
+      <div>
+        <div class="logo-name">K&amp;K Industries</div>
+        <div class="logo-sub">Site Snapshots</div>
+      </div>
+    </a>
+    <div class="hdr-right">
+      <div class="live"><div class="live-dot"></div>Live</div>
+      <div class="hdr-date" id="hdrDate"></div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <div class="page-title a1">
+      <h1>Project <em>Overview</em></h1>
+      <p>Weekly site performance snapshots across all active projects</p>
+    </div>
+
+    <nav class="tabs a2">
+      <a class="tab active" href="index.html">Overview</a>
+      <a class="tab" href="weekly.html">Weekly</a>
+      <a class="tab" href="monthly.html">Monthly</a>
+    </nav>
+
+    <div class="kpi-strip a3">
+      <div class="kpi">
+        <div class="kpi-label">Active Sites</div>
+        <div class="kpi-value">04</div>
+        <div class="kpi-sub">↑ 1 from last week</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">On Track</div>
+        <div class="kpi-value ok">02</div>
+        <div class="kpi-sub">50% of portfolio</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">At Risk</div>
+        <div class="kpi-value warn">01</div>
+        <div class="kpi-sub">Monitoring closely</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Delayed</div>
+        <div class="kpi-value bad">01</div>
+        <div class="kpi-sub">Action required</div>
+      </div>
+    </div>
+
+    <div class="card a4">
+      <div class="card-head">
+        <span class="card-head-label">Active Projects — Week 14, 2026</span>
+        <button class="card-head-action">Export ↗</button>
+      </div>
+
+      <div class="proj-row" data-id="childers">
+        <div>
+          <div class="proj-name">Pearl Energy Childers</div>
+          <div class="proj-meta">Ktori Group · QLD · Since Jan 2026</div>
+        </div>
+        <div class="prog-col">
+          <div class="prog-labels"><span>Progress</span><span>38%</span></div>
+          <div class="prog-track"><div class="prog-fill bad" data-w="38"></div></div>
+        </div>
+        <div class="pill bad"><div class="pill-dot"></div>Delayed</div>
+        <div class="row-caret">›</div>
+      </div>
+
+      <div class="proj-row" data-id="williamstown">
+        <div>
+          <div class="proj-name">Exus Williamstown</div>
+          <div class="proj-meta">Contractor TBC · VIC · Since Feb 2026</div>
+        </div>
+        <div class="prog-col">
+          <div class="prog-labels"><span>Progress</span><span>61%</span></div>
+          <div class="prog-track"><div class="prog-fill ok" data-w="61"></div></div>
+        </div>
+        <div class="pill ok"><div class="pill-dot"></div>On Track</div>
+        <div class="row-caret">›</div>
+      </div>
+
+      <div class="proj-row" data-id="emerald">
+        <div>
+          <div class="proj-name">Emerald</div>
+          <div class="proj-meta">Contractor TBC · VIC · Since Mar 2026</div>
+        </div>
+        <div class="prog-col">
+          <div class="prog-labels"><span>Progress</span><span>22%</span></div>
+          <div class="prog-track"><div class="prog-fill warn" data-w="22"></div></div>
+        </div>
+        <div class="pill warn"><div class="pill-dot"></div>At Risk</div>
+        <div class="row-caret">›</div>
+      </div>
+
+      <div class="proj-row" data-id="daguilar">
+        <div>
+          <div class="proj-name">Caltex D'Aguilar</div>
+          <div class="proj-meta">Contractor TBC · QLD · Since Dec 2025</div>
+        </div>
+        <div class="prog-col">
+          <div class="prog-labels"><span>Progress</span><span>79%</span></div>
+          <div class="prog-track"><div class="prog-fill ok" data-w="79"></div></div>
+        </div>
+        <div class="pill ok"><div class="pill-dot"></div>On Track</div>
+        <div class="row-caret">›</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>K&amp;K Industries Pty Ltd</span>
+    <span id="ftrTime"></span>
+  </footer>
+
+  <!-- BACKDROP + DRAWER -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="drawer" id="drawer">
+    <div class="drw-head">
+      <button class="drw-close" id="btnClose">
+        <svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg>
+        Close
+      </button>
+      <div class="drw-name" id="dName"></div>
+      <div class="drw-meta" id="dMeta"></div>
+      <div class="drw-status-row">
+        <div class="pill" id="dPill"><div class="pill-dot"></div><span id="dPillTxt"></span></div>
+        <span class="drw-week" id="dWeek"></span>
+      </div>
+    </div>
+    <div class="drw-body" id="dBody"></div>
+    <div class="drw-foot">
+      <button class="drw-btn primary">Open Full Report ↗</button>
+      <button class="drw-btn ghost" id="btnClose2">Close</button>
+    </div>
+  </div>
+
+  <script>
+    /* ── CLOCK ─────────────────────────────────────── */
+    const fmtDate = d => d.toLocaleDateString('en-AU',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+    const fmtTime = d => d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+    const tick = () => {
+      const n = new Date();
+      document.getElementById('hdrDate').textContent = fmtDate(n);
+      document.getElementById('ftrTime').textContent = 'Last updated ' + fmtTime(n);
+    };
+    tick(); setInterval(tick, 30000);
+
+    /* ── PROGRESS BARS ─────────────────────────────── */
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.prog-fill').forEach(b => {
+        const w = b.dataset.w;
+        b.style.width = '0%';
+        setTimeout(() => { b.style.width = w + '%'; }, 180);
+      });
+    });
+
+    /* ── PROJECT DATA ──────────────────────────────── */
+    const DATA = {
+      childers: {
+        name: 'Pearl Energy Childers', meta: 'Ktori Group · QLD · Since Jan 2026',
+        week: 'Week 14, 2026', status: 'bad', label: 'Delayed',
+        kpis: [
+          { label:'Programme Delay', val:'15–20 days', cls:'bad' },
+          { label:'Progress',        val:'38%',        cls:'bad' },
+          { label:'Contractor Claim',val:'2 days',     cls:'warn' },
+          { label:'Weeks Active',    val:'13',          cls:'' },
+        ],
+        prog: { pct:38, cls:'bad' },
+        thisWeek: 'No concrete works commenced. Site preparation activities ongoing. Daily diary logs reviewed — no change to critical path status.',
+        issues: [
+          { cls:'bad',  t:'Brucon (concrete subcontractor) has not mobilised — critical path impact.' },
+          { cls:'bad',  t:'Contractor-reported delay of 2 days understates actual programme loss of 15–20 WDs.' },
+          { cls:'warn', t:'Slab and structural steel cannot commence until Brucon is on site.' },
+          { cls:'warn', t:'No revised programme received from contractor.' },
+        ],
+        actions: [
+          'Demand written confirmation from Ktori Group on Brucon mobilisation date.',
+          'Request revised programme by end of this week.',
+          'Issue formal delay notice if mobilisation not confirmed within 48 hrs.',
+          'Update client on corrected delay assessment — 15–20 WDs, not 2.',
+        ],
+      },
+      williamstown: {
+        name: 'Exus Williamstown', meta: 'Contractor TBC · VIC · Since Feb 2026',
+        week: 'Week 14, 2026', status: 'ok', label: 'On Track',
+        kpis: [
+          { label:'Programme Variance', val:'+2 days', cls:'ok' },
+          { label:'Progress',           val:'61%',     cls:'ok' },
+          { label:'Open RFIs',          val:'3',       cls:'warn' },
+          { label:'Weeks Active',       val:'8',       cls:'' },
+        ],
+        prog: { pct:61, cls:'ok' },
+        thisWeek: 'Framing and rough-in progressing well. Internal fitout stage on schedule. No significant issues to report.',
+        issues: [
+          { cls:'ok',   t:'Works tracking ahead of programme by approximately 2 days.' },
+          { cls:'warn', t:'3 open RFIs pending — none currently on critical path.' },
+          { cls:'ok',   t:'Labour resourcing adequate for current scope.' },
+        ],
+        actions: [
+          'Chase outstanding RFI responses — target closure by Week 15.',
+          'Confirm upcoming material delivery schedule with contractor.',
+          'Issue updated programme to client for Week 15 works.',
+        ],
+      },
+      emerald: {
+        name: 'Emerald', meta: 'Contractor TBC · VIC · Since Mar 2026',
+        week: 'Week 14, 2026', status: 'warn', label: 'At Risk',
+        kpis: [
+          { label:'Programme Variance', val:'−5 days', cls:'warn' },
+          { label:'Progress',           val:'22%',     cls:'warn' },
+          { label:'Open Issues',        val:'4',       cls:'warn' },
+          { label:'Weeks Active',       val:'4',       cls:'' },
+        ],
+        prog: { pct:22, cls:'warn' },
+        thisWeek: 'Site establishment largely complete. Footings poured Lots 1–3. Contractor yet to confirm subcontractor lineup for remaining works.',
+        issues: [
+          { cls:'warn', t:'Early-stage delays in site establishment and services coordination.' },
+          { cls:'warn', t:'Subcontractor procurement not finalised for two trade packages.' },
+          { cls:'ok',   t:'Footings and slab works progressing — no structural issues.' },
+        ],
+        actions: [
+          'Confirm subcontractor appointments for outstanding packages.',
+          'Review programme with contractor and flag risk to client.',
+          'Escalate to Delayed status if no recovery by Week 15.',
+        ],
+      },
+      daguilar: {
+        name: "Caltex D'Aguilar", meta: 'Contractor TBC · QLD · Since Dec 2025',
+        week: 'Week 14, 2026', status: 'ok', label: 'On Track',
+        kpis: [
+          { label:'Programme Variance', val:'+1 day', cls:'ok' },
+          { label:'Progress',           val:'79%',    cls:'ok' },
+          { label:'Defects Logged',     val:'6',      cls:'warn' },
+          { label:'Weeks Active',       val:'18',     cls:'' },
+        ],
+        prog: { pct:79, cls:'ok' },
+        thisWeek: 'External works and landscaping complete. Internal finishes near complete. Defect walk-through conducted with contractor Thu 3 Apr.',
+        issues: [
+          { cls:'ok',   t:'Project approaching PC — on track for handover.' },
+          { cls:'warn', t:'6 defect items logged pending contractor rectification.' },
+          { cls:'ok',   t:'Final inspections scheduled for Week 15.' },
+        ],
+        actions: [
+          'Issue defect schedule — rectification required by Week 15.',
+          'Confirm PC inspection date and notify client.',
+          'Prepare handover documentation checklist.',
+        ],
+      },
+    };
+
+    /* ── DRAWER ────────────────────────────────────── */
+    const drawer   = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+
+    function openDrawer(id) {
+      const p = DATA[id]; if (!p) return;
+
+      document.getElementById('dName').textContent    = p.name;
+      document.getElementById('dMeta').textContent    = p.meta;
+      document.getElementById('dWeek').textContent    = p.week;
+      document.getElementById('dPillTxt').textContent = p.label;
+      document.getElementById('dPill').className      = 'pill ' + p.status;
+
+      document.getElementById('dBody').innerHTML = `
+        <div class="drw-sec">
+          <div class="drw-sec-title">This Week</div>
+          <div class="drw-item"><div class="drw-item-dot ok"></div><span>${p.thisWeek}</span></div>
+        </div>
+
+        <div class="drw-sec">
+          <div class="drw-sec-title">Key Metrics</div>
+          <div class="drw-kpis">
+            ${p.kpis.map(k=>`
+              <div class="drw-kpi">
+                <div class="drw-kpi-label">${k.label}</div>
+                <div class="drw-kpi-val ${k.cls}">${k.val}</div>
+              </div>`).join('')}
           </div>
         </div>
 
-        <div class="d-section">
-          <div class="d-section-title">Key Metrics</div>
-          <div class="d-kpi-grid">
-            ${p.kpis.map(k => `
-              <div class="d-kpi">
-                <div class="d-kpi-label">${k.label}</div>
-                <div class="d-kpi-val ${k.cls}">${k.val}</div>
-              </div>
-            `).join('')}
+        <div class="drw-sec">
+          <div class="drw-sec-title">Overall Progress</div>
+          <div class="drw-prog-labels"><span>Completion</span><span>${p.prog.pct}%</span></div>
+          <div class="drw-prog-track">
+            <div class="drw-prog-fill ${p.prog.cls}" style="width:0%" data-w="${p.prog.pct}"></div>
           </div>
         </div>
 
-        <div class="d-section">
-          <div class="d-section-title">Overall Progress</div>
-          <div class="d-prog-top"><span>Completion</span><span>${p.prog.pct}%</span></div>
-          <div class="d-prog-bar">
-            <div class="d-prog-fill ${p.prog.cls}" style="width:0%" data-w="${p.prog.pct}%"></div>
-          </div>
+        <div class="drw-sec">
+          <div class="drw-sec-title">Issues &amp; Observations</div>
+          ${p.issues.map(i=>`
+            <div class="drw-item">
+              <div class="drw-item-dot ${i.cls}"></div><span>${i.t}</span>
+            </div>`).join('')}
         </div>
 
-        <div class="d-section">
-          <div class="d-section-title">Issues &amp; Observations</div>
-          ${p.issues.map(i => `
-            <div class="d-issue">
-              <div class="d-issue-dot ${i.dot}"></div>
-              <span>${i.text}</span>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="d-section">
-          <div class="d-section-title">Actions Required</div>
-          ${p.actions.map((a, i) => `
-            <div class="d-action">
-              <span class="d-action-num">${String(i+1).padStart(2,'0')}</span>
-              <span>${a}</span>
-            </div>
-          `).join('')}
+        <div class="drw-sec">
+          <div class="drw-sec-title">Actions Required</div>
+          ${p.actions.map((a,i)=>`
+            <div class="drw-action">
+              <span class="drw-action-n">${String(i+1).padStart(2,'0')}</span><span>${a}</span>
+            </div>`).join('')}
         </div>
       `;
 
-      document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active-row'));
-      document.querySelector(`[data-project="${key}"]`).classList.add('active-row');
+      document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('active'));
+      document.querySelector(`[data-id="${id}"]`).classList.add('active');
 
       drawer.classList.add('open');
       backdrop.classList.add('open');
-      body.scrollTop = 0;
+      document.getElementById('dBody').scrollTop = 0;
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          body.querySelectorAll('.d-prog-fill').forEach(bar => { bar.style.width = bar.dataset.w; });
-        }, 80);
-      });
+      requestAnimationFrame(() => setTimeout(() => {
+        document.querySelectorAll('.drw-prog-fill').forEach(b => {
+          b.style.width = b.dataset.w + '%';
+        });
+      }, 60));
     }
 
     function closeDrawer() {
       drawer.classList.remove('open');
       backdrop.classList.remove('open');
-      document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active-row'));
+      document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('active'));
     }
 
-    document.querySelectorAll('.project-row').forEach(row => {
-      row.addEventListener('click', () => openDrawer(row.dataset.project));
-    });
+    document.querySelectorAll('.proj-row').forEach(r =>
+      r.addEventListener('click', () => openDrawer(r.dataset.id))
+    );
 
-    document.getElementById('drawerClose').addEventListener('click',  closeDrawer);
-    document.getElementById('drawerClose2').addEventListener('click', closeDrawer);
+    document.getElementById('btnClose').addEventListener('click',  closeDrawer);
+    document.getElementById('btnClose2').addEventListener('click', closeDrawer);
     backdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    document.addEventListener('keydown', e => e.key === 'Escape' && closeDrawer());
   </script>
 
 </body>
