@@ -572,35 +572,767 @@
   <!-- FOOTER -->
   <footer>
     <span>K&amp;K Industries Pty Ltd</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K&K Industries — Site Snapshots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0f10;
+      --surface:  #161a1c;
+      --surface2: #1e2426;
+      --border:   #2a3035;
+      --accent:   #e8a020;
+      --text:     #e8ecee;
+      --muted:    #7a8a92;
+      --danger:   #d95040;
+      --ok:       #3ab07a;
+      --warn:     #e8a020;
+      --drawer-w: 420px;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: radial-gradient(circle, #2a3035 1px, transparent 1px);
+      background-size: 28px 28px;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 200;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; }
+
+    .logo-mark {
+      width: 36px; height: 36px; background: var(--accent); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: #000; flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 0.08em; color: var(--text); line-height: 1;
+    }
+
+    .logo-sub {
+      font-size: 11px; color: var(--muted); font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+
+    .live-badge {
+      display: flex; align-items: center; gap: 6px; font-size: 11px;
+      font-weight: 500; color: var(--ok); font-family: 'DM Mono', monospace;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--ok); animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.8); }
+    }
+
+    .date-stamp {
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--muted); letter-spacing: 0.04em;
+    }
+
+    /* ── PAGE ───────────────────────────────────────── */
+    .page { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .page-title { margin-bottom: 36px; animation: fadeUp .5s ease both; }
+
+    .page-title h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 6vw, 64px); letter-spacing: .05em; line-height: 1;
+    }
+
+    .page-title h1 span { color: var(--accent); }
+
+    .page-title p {
+      margin-top: 8px; color: var(--muted);
+      font-size: 14px; font-weight: 300; letter-spacing: .04em;
+    }
+
+    /* ── TABS ───────────────────────────────────────── */
+    .tab-bar {
+      display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 5px; margin-bottom: 28px;
+      width: fit-content; animation: fadeUp .5s .1s ease both;
+    }
+
+    .tab {
+      padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      color: var(--muted); cursor: pointer; border: none; background: transparent;
+      transition: all .2s ease; letter-spacing: .03em; text-decoration: none; display: inline-block;
+    }
+
+    .tab:hover { color: var(--text); background: var(--surface2); }
+    .tab.active { background: var(--accent); color: #000; font-weight: 600; }
+
+    /* ── STAT STRIP ─────────────────────────────────── */
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 12px; margin-bottom: 28px; animation: fadeUp .5s .15s ease both;
+    }
+
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px;
+      position: relative; overflow: hidden; transition: border-color .2s;
+    }
+
+    .stat-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background: var(--accent); opacity:0; transition: opacity .2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); }
+    .stat-card:hover::before { opacity:1; }
+
+    .stat-label {
+      font-size: 10px; font-weight: 500; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+      letter-spacing: .04em; line-height: 1;
+    }
+
+    .stat-value.ok   { color: var(--ok); }
+    .stat-value.warn { color: var(--warn); }
+    .stat-value.bad  { color: var(--danger); }
+
+    .stat-change { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+    /* ── MAIN CARD ──────────────────────────────────── */
+    .main-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; animation: fadeUp .5s .2s ease both;
+    }
+
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; border-bottom: 1px solid var(--border); background: var(--surface2);
+    }
+
+    .card-title {
+      font-size: 13px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .card-action {
+      font-size: 12px; color: var(--accent); font-weight: 500;
+      cursor: pointer; background: none; border: none;
+      letter-spacing: .04em; transition: opacity .2s;
+    }
+
+    .card-action:hover { opacity: .7; }
+
+    /* ── PROJECT ROWS ───────────────────────────────── */
+    .project-row {
+      display: grid; grid-template-columns: 1fr auto auto auto;
+      align-items: center; gap: 16px; padding: 18px 24px;
+      border-bottom: 1px solid var(--border); transition: background .15s;
+      cursor: pointer; position: relative;
+    }
+
+    .project-row:last-child { border-bottom: none; }
+    .project-row:hover { background: var(--surface2); }
+    .project-row:hover .row-arrow { opacity:1; transform:translateX(0); }
+    .project-row.active-row { background: var(--surface2); border-left: 3px solid var(--accent); }
+
+    .project-name { font-size: 15px; font-weight: 500; color: var(--text); }
+
+    .project-meta {
+      font-size: 12px; color: var(--muted); margin-top: 3px; font-family: 'DM Mono', monospace;
+    }
+
+    .progress-col { width: 120px; }
+
+    .progress-label {
+      display: flex; justify-content: space-between; font-size: 11px;
+      color: var(--muted); margin-bottom: 5px; font-family: 'DM Mono', monospace;
+    }
+
+    .progress-bar { height: 5px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+
+    .progress-fill {
+      height: 100%; border-radius: 99px; background: var(--accent);
+      transition: width .8s cubic-bezier(.16,1,.3,1);
+    }
+
+    .progress-fill.ok   { background: var(--ok); }
+    .progress-fill.warn { background: var(--warn); }
+    .progress-fill.bad  { background: var(--danger); }
+
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 99px; font-size: 11px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
+    }
+
+    .status-pill.ok   { background: rgba(58,176,122,.12);  color: var(--ok); }
+    .status-pill.warn { background: rgba(232,160,32,.12);  color: var(--warn); }
+    .status-pill.bad  { background: rgba(217,80,64,.12);   color: var(--danger); }
+
+    .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    .row-arrow {
+      font-size: 16px; color: var(--muted);
+      opacity: 0; transform: translateX(-4px); transition: all .2s ease;
+    }
+
+    /* ── BACKDROP ───────────────────────────────────── */
+    .backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.55);
+      backdrop-filter: blur(2px); z-index: 300;
+      opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+
+    .backdrop.open { opacity: 1; pointer-events: all; }
+
+    /* ── DRAWER ─────────────────────────────────────── */
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer-w);
+      background: var(--surface); border-left: 1px solid var(--border);
+      z-index: 400; transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.16,1,.3,1);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-head {
+      padding: 20px 24px 18px; border-bottom: 1px solid var(--border);
+      background: var(--surface2); flex-shrink: 0;
+    }
+
+    .drawer-close {
+      display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted);
+      font-family: 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase;
+      cursor: pointer; background: none; border: none; margin-bottom: 14px; transition: color .15s;
+    }
+
+    .drawer-close:hover { color: var(--text); }
+    .drawer-close svg { width: 14px; height: 14px; }
+
+    .drawer-project-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 30px;
+      letter-spacing: .06em; line-height: 1.1; color: var(--text);
+    }
+
+    .drawer-meta { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 4px; }
+
+    .drawer-status-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 20px 24px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+
+    .drawer-body::-webkit-scrollbar { width: 4px; }
+    .drawer-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .d-section { margin-bottom: 24px; }
+
+    .d-section-title {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    .d-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .d-kpi {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+    }
+
+    .d-kpi-label {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .d-kpi-val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--text); }
+    .d-kpi-val.ok   { color: var(--ok); }
+    .d-kpi-val.warn { color: var(--warn); }
+    .d-kpi-val.bad  { color: var(--danger); }
+
+    .d-prog-wrap { margin-bottom: 6px; }
+
+    .d-prog-top {
+      display: flex; justify-content: space-between; font-size: 12px;
+      margin-bottom: 6px; font-family: 'DM Mono', monospace; color: var(--muted);
+    }
+
+    .d-prog-bar { height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+
+    .d-prog-fill {
+      height: 100%; border-radius: 99px; transition: width .9s cubic-bezier(.16,1,.3,1);
+    }
+
+    .d-prog-fill.ok   { background: var(--ok); }
+    .d-prog-fill.warn { background: var(--warn); }
+    .d-prog-fill.bad  { background: var(--danger); }
+
+    .d-issue {
+      display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
+      border-radius: 8px; background: var(--surface2); border: 1px solid var(--border);
+      margin-bottom: 8px; font-size: 13px; line-height: 1.5;
+    }
+
+    .d-issue:last-child { margin-bottom: 0; }
+
+    .d-issue-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+    }
+
+    .d-issue-dot.bad  { background: var(--danger); }
+    .d-issue-dot.warn { background: var(--warn); }
+    .d-issue-dot.ok   { background: var(--ok); }
+
+    .d-action {
+      display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
+      border-radius: 8px; background: rgba(232,160,32,.06); border: 1px solid rgba(232,160,32,.2);
+      margin-bottom: 8px; font-size: 13px; line-height: 1.5;
+    }
+
+    .d-action:last-child { margin-bottom: 0; }
+
+    .d-action-num {
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--accent); font-weight: 500; flex-shrink: 0; margin-top: 1px;
+    }
+
+    .drawer-foot {
+      padding: 16px 24px; border-top: 1px solid var(--border);
+      flex-shrink: 0; display: flex; gap: 10px;
+    }
+
+    .d-btn {
+      flex: 1; padding: 10px; border-radius: 8px; font-size: 13px;
+      font-weight: 500; cursor: pointer; border: none; transition: opacity .2s; letter-spacing: .02em;
+    }
+
+    .d-btn:hover { opacity: .8; }
+    .d-btn-primary { background: var(--accent); color: #000; }
+    .d-btn-ghost { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border); padding: 20px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .04em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      :root { --drawer-w: 100vw; }
+      header { padding: 0 16px; }
+      .page  { padding: 24px 16px 60px; }
+      .project-row { grid-template-columns: 1fr auto auto; }
+      .progress-col { display: none; }
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .tab { padding: 8px 14px; font-size: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <div class="logo-mark">KK</div>
+      <div>
+        <div class="logo-text">K&amp;K Industries</div>
+        <div class="logo-sub">Site Snapshots</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div>Live</div>
+      <div class="date-stamp" id="datestamp"></div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <div class="page-title">
+      <h1>Project <span>Overview</span></h1>
+      <p>Weekly site performance snapshots across all active projects</p>
+    </div>
+
+    <div class="tab-bar">
+      <a href="weekly.html"  class="tab active">Weekly</a>
+      <a href="monthly.html" class="tab">Monthly</a>
+      <a href="#"            class="tab">Quarterly</a>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-card">
+        <div class="stat-label">Active Sites</div>
+        <div class="stat-value">04</div>
+        <div class="stat-change">↑ 1 from last week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">On Track</div>
+        <div class="stat-value ok">02</div>
+        <div class="stat-change">50% of portfolio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">At Risk</div>
+        <div class="stat-value warn">01</div>
+        <div class="stat-change">Monitoring closely</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Delayed</div>
+        <div class="stat-value bad">01</div>
+        <div class="stat-change">Action required</div>
+      </div>
+    </div>
+
+    <div class="main-card">
+      <div class="card-header">
+        <span class="card-title">Active Projects — Week 14, 2026</span>
+        <button class="card-action">Export ↗</button>
+      </div>
+
+      <div class="project-row" data-project="childers">
+        <div>
+          <div class="project-name">Pearl Energy Childers</div>
+          <div class="project-meta">Ktori Group · QLD · Since Jan 2026</div>
+        </div>
+        <div class="progress-col">
+          <div class="progress-label"><span>Progress</span><span>38%</span></div>
+          <div class="progress-bar"><div class="progress-fill bad" style="width:38%"></div></div>
+        </div>
+        <div class="status-pill bad"><div class="pill-dot"></div>Delayed</div>
+        <div class="row-arrow">›</div>
+      </div>
+
+      <div class="project-row" data-project="williamstown">
+        <div>
+          <div class="project-name">Exus Williamstown</div>
+          <div class="project-meta">Contractor TBC · VIC · Since Feb 2026</div>
+        </div>
+        <div class="progress-col">
+          <div class="progress-label"><span>Progress</span><span>61%</span></div>
+          <div class="progress-bar"><div class="progress-fill ok" style="width:61%"></div></div>
+        </div>
+        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
+        <div class="row-arrow">›</div>
+      </div>
+
+      <div class="project-row" data-project="emerald">
+        <div>
+          <div class="project-name">Emerald</div>
+          <div class="project-meta">Contractor TBC · VIC · Since Mar 2026</div>
+        </div>
+        <div class="progress-col">
+          <div class="progress-label"><span>Progress</span><span>22%</span></div>
+          <div class="progress-bar"><div class="progress-fill warn" style="width:22%"></div></div>
+        </div>
+        <div class="status-pill warn"><div class="pill-dot"></div>At Risk</div>
+        <div class="row-arrow">›</div>
+      </div>
+
+      <div class="project-row" data-project="daguilar">
+        <div>
+          <div class="project-name">Caltex D'Aguilar</div>
+          <div class="project-meta">Contractor TBC · QLD · Since Dec 2025</div>
+        </div>
+        <div class="progress-col">
+          <div class="progress-label"><span>Progress</span><span>79%</span></div>
+          <div class="progress-bar"><div class="progress-fill ok" style="width:79%"></div></div>
+        </div>
+        <div class="status-pill ok"><div class="pill-dot"></div>On Track</div>
+        <div class="row-arrow">›</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>K&amp;K Industries Pty Ltd</span>
     <span id="footer-time"></span>
   </footer>
 
+  <!-- BACKDROP -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-head">
+      <button class="drawer-close" id="drawerClose">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 1l12 12M13 1L1 13"/>
+        </svg>
+        Close
+      </button>
+      <div class="drawer-project-name" id="dName"></div>
+      <div class="drawer-meta" id="dMeta"></div>
+      <div class="drawer-status-row">
+        <div class="status-pill" id="dPill"><div class="pill-dot"></div><span id="dPillTxt"></span></div>
+        <span id="dWeek" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)"></span>
+      </div>
+    </div>
+
+    <div class="drawer-body" id="drawerBody"></div>
+
+    <div class="drawer-foot">
+      <button class="d-btn d-btn-primary">Open Full Report ↗</button>
+      <button class="d-btn d-btn-ghost" id="drawerClose2">Close</button>
+    </div>
+  </div>
+
   <script>
-    // Live date/time stamps
+    /* DATE/TIME */
     function fmt(d) {
-      return d.toLocaleDateString('en-AU', {
-        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'
-      });
+      return d.toLocaleDateString('en-AU', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
     }
     function fmtTime(d) {
-      return d.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+      return d.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
     }
     function tick() {
       const now = new Date();
-      document.getElementById('datestamp').textContent    = fmt(now);
-      document.getElementById('footer-time').textContent  = 'Last updated ' + fmtTime(now);
+      document.getElementById('datestamp').textContent   = fmt(now);
+      document.getElementById('footer-time').textContent = 'Last updated ' + fmtTime(now);
     }
-    tick();
-    setInterval(tick, 30000);
+    tick(); setInterval(tick, 30000);
 
-    // Animate progress bars on load
+    /* PROGRESS BARS */
     window.addEventListener('load', () => {
       document.querySelectorAll('.progress-fill').forEach(bar => {
-        const w = bar.style.width;
-        bar.style.width = '0%';
+        const w = bar.style.width; bar.style.width = '0%';
         setTimeout(() => { bar.style.width = w; }, 200);
       });
     });
+
+    /* PROJECT DATA */
+    const projects = {
+      childers: {
+        name: 'Pearl Energy Childers',
+        meta: 'Ktori Group · QLD · Since Jan 2026',
+        week: 'Week 14, 2026',
+        status: 'bad', label: 'Delayed',
+        kpis: [
+          { label: 'Programme Delay',  val: '15–20 days', cls: 'bad' },
+          { label: 'Progress',         val: '38%',        cls: 'bad' },
+          { label: 'Contractor Claim', val: '2 days',     cls: 'warn' },
+          { label: 'Weeks Active',     val: '13',         cls: '' },
+        ],
+        prog: { pct: 38, cls: 'bad' },
+        thisWeek: 'No concrete works commenced. Site preparation activities ongoing. Daily diary logs reviewed — no change to critical path status.',
+        issues: [
+          { dot: 'bad',  text: 'Brucon (concrete subcontractor) has not mobilised — critical path impact.' },
+          { dot: 'bad',  text: 'Contractor-reported delay of 2 days significantly understates actual programme loss of 15–20 working days.' },
+          { dot: 'warn', text: 'Slab works and structural steel cannot commence until Brucon is on site.' },
+          { dot: 'warn', text: 'Contractor has not issued a revised programme reflecting current delays.' },
+        ],
+        actions: [
+          'Demand written confirmation from Ktori Group on Brucon mobilisation date.',
+          'Request revised programme issued by end of this week.',
+          'Table formal delay notice to contractor if mobilisation not confirmed within 48 hrs.',
+          'Update client on corrected delay assessment — 15–20 WDs, not 2.',
+        ],
+      },
+      williamstown: {
+        name: 'Exus Williamstown',
+        meta: 'Contractor TBC · VIC · Since Feb 2026',
+        week: 'Week 14, 2026',
+        status: 'ok', label: 'On Track',
+        kpis: [
+          { label: 'Programme Variance', val: '+2 days', cls: 'ok' },
+          { label: 'Progress',           val: '61%',     cls: 'ok' },
+          { label: 'Open RFIs',          val: '3',       cls: 'warn' },
+          { label: 'Weeks Active',       val: '8',       cls: '' },
+        ],
+        prog: { pct: 61, cls: 'ok' },
+        thisWeek: 'Framing and rough-in progressing well. Internal fitout stage on schedule. No significant issues to report.',
+        issues: [
+          { dot: 'ok',   text: 'Works tracking ahead of programme by approximately 2 days.' },
+          { dot: 'warn', text: '3 open RFIs pending contractor response — none currently on critical path.' },
+          { dot: 'ok',   text: 'Labour resourcing adequate for current scope.' },
+        ],
+        actions: [
+          'Chase outstanding RFI responses — target closure by Week 15.',
+          'Confirm upcoming material delivery schedule with contractor.',
+          'Issue updated programme to client for Week 15 works.',
+        ],
+      },
+      emerald: {
+        name: 'Emerald',
+        meta: 'Contractor TBC · VIC · Since Mar 2026',
+        week: 'Week 14, 2026',
+        status: 'warn', label: 'At Risk',
+        kpis: [
+          { label: 'Programme Variance', val: '−5 days', cls: 'warn' },
+          { label: 'Progress',           val: '22%',     cls: 'warn' },
+          { label: 'Open Issues',        val: '4',       cls: 'warn' },
+          { label: 'Weeks Active',       val: '4',       cls: '' },
+        ],
+        prog: { pct: 22, cls: 'warn' },
+        thisWeek: 'Site establishment works largely complete. Footings poured on Lots 1–3. Contractor yet to confirm subcontractor lineup for remainder of works.',
+        issues: [
+          { dot: 'warn', text: 'Early-stage delays in site establishment and services coordination.' },
+          { dot: 'warn', text: 'Subcontractor procurement not yet finalised for two trade packages.' },
+          { dot: 'ok',   text: 'Footings and slab works progressing — no structural issues identified.' },
+        ],
+        actions: [
+          'Confirm subcontractor appointments for outstanding trade packages.',
+          'Review programme with contractor and flag risk to client.',
+          'Monitor closely — escalate to Delayed if no recovery in Week 15.',
+        ],
+      },
+      daguilar: {
+        name: "Caltex D'Aguilar",
+        meta: 'Contractor TBC · QLD · Since Dec 2025',
+        week: 'Week 14, 2026',
+        status: 'ok', label: 'On Track',
+        kpis: [
+          { label: 'Programme Variance', val: '+1 day', cls: 'ok' },
+          { label: 'Progress',           val: '79%',    cls: 'ok' },
+          { label: 'Defects Logged',     val: '6',      cls: 'warn' },
+          { label: 'Weeks Active',       val: '18',     cls: '' },
+        ],
+        prog: { pct: 79, cls: 'ok' },
+        thisWeek: "External works and landscaping complete. Internal finishes near complete. Defect identification walk-through conducted with contractor on Thu 3 Apr.",
+        issues: [
+          { dot: 'ok',   text: 'Project approaching practical completion — on track for handover.' },
+          { dot: 'warn', text: '6 defect items logged pending contractor rectification.' },
+          { dot: 'ok',   text: 'Final inspections scheduled for Week 15.' },
+        ],
+        actions: [
+          'Issue defect schedule to contractor — require rectification by Week 15.',
+          'Confirm PC inspection date and notify client.',
+          'Prepare handover documentation checklist.',
+        ],
+      },
+    };
+
+    /* DRAWER */
+    const drawer   = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+
+    function openDrawer(key) {
+      const p = projects[key];
+      if (!p) return;
+
+      document.getElementById('dName').textContent    = p.name;
+      document.getElementById('dMeta').textContent    = p.meta;
+      document.getElementById('dWeek').textContent    = p.week;
+      document.getElementById('dPillTxt').textContent = p.label;
+
+      const pill = document.getElementById('dPill');
+      pill.className = 'status-pill ' + p.status;
+
+      const body = document.getElementById('drawerBody');
+      body.innerHTML = `
+        <div class="d-section">
+          <div class="d-section-title">This Week</div>
+          <div class="d-issue">
+            <div class="d-issue-dot ok"></div>
+            <span>${p.thisWeek}</span>
+          </div>
+        </div>
+
+        <div class="d-section">
+          <div class="d-section-title">Key Metrics</div>
+          <div class="d-kpi-grid">
+            ${p.kpis.map(k => `
+              <div class="d-kpi">
+                <div class="d-kpi-label">${k.label}</div>
+                <div class="d-kpi-val ${k.cls}">${k.val}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="d-section">
+          <div class="d-section-title">Overall Progress</div>
+          <div class="d-prog-top"><span>Completion</span><span>${p.prog.pct}%</span></div>
+          <div class="d-prog-bar">
+            <div class="d-prog-fill ${p.prog.cls}" style="width:0%" data-w="${p.prog.pct}%"></div>
+          </div>
+        </div>
+
+        <div class="d-section">
+          <div class="d-section-title">Issues &amp; Observations</div>
+          ${p.issues.map(i => `
+            <div class="d-issue">
+              <div class="d-issue-dot ${i.dot}"></div>
+              <span>${i.text}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="d-section">
+          <div class="d-section-title">Actions Required</div>
+          ${p.actions.map((a, i) => `
+            <div class="d-action">
+              <span class="d-action-num">${String(i+1).padStart(2,'0')}</span>
+              <span>${a}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active-row'));
+      document.querySelector(`[data-project="${key}"]`).classList.add('active-row');
+
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      body.scrollTop = 0;
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          body.querySelectorAll('.d-prog-fill').forEach(bar => { bar.style.width = bar.dataset.w; });
+        }, 80);
+      });
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active-row'));
+    }
+
+    document.querySelectorAll('.project-row').forEach(row => {
+      row.addEventListener('click', () => openDrawer(row.dataset.project));
+    });
+
+    document.getElementById('drawerClose').addEventListener('click',  closeDrawer);
+    document.getElementById('drawerClose2').addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
   </script>
 
 </body>
