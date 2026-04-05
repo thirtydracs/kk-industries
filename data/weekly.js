@@ -1,52 +1,42 @@
-const dashboard = {
-  title: "Project Dashboard",
-  client: "K&K Industries",
-  weekEnding: "1 April 2026",
-  note: "Structured log fields were incomplete across parts of this reporting period. Dashboard reflects site activity, labour signal, and available supervisor notes.",
-  jobs: [
-    {
-      name: "Caltex D’Aguilar",
-      location: "D’Aguilar",
-      stage: "Pre-Slab / Site Works",
-      status: "Behind",
-      dataQuality: "Good",
-      holding: "Ace Demolition non-performance and stockpile constraint",
-      labour: "Adequate",
-      reality: "Key milestones have been achieved, but demolition delays are holding the programme back and starting to constrain site movement.",
-      action: "Replace or directly manage contractor, clear stockpile, and confirm slab programme."
-    },
-    {
-      name: "Pearl Energy Childers",
-      location: "Childers",
-      stage: "Pre-Pour",
-      status: "On Track",
-      dataQuality: "Moderate",
-      holding: "Concreting start relies on post-Easter mobilisation",
-      labour: "Insufficient",
-      reality: "Prep is largely complete, but the job is fragile with only one operator onsite and limited float before the pour.",
-      action: "Lock in concreter, increase crew, and confirm slab readiness."
-    },
-    {
-      name: "EXUS Williamstown",
-      location: "Williamstown",
-      stage: "Early Works",
-      status: "Unknown",
-      dataQuality: "Limited",
-      holding: "No structured logs completed",
-      labour: "Active trades onsite",
-      reality: "Work appears to be progressing, but there is no clear view of programme position, blockers, or actual completion against plan.",
-      action: "Complete logs properly and confirm true programme status immediately."
-    },
-    {
-      name: "Pearl Energy Emerald",
-      location: "Emerald",
-      stage: "Early Works",
-      status: "Unknown",
-      dataQuality: "Limited",
-      holding: "No structured data yet",
-      labour: "Unknown",
-      reality: "Unable to assess properly from current information. Site position cannot be verified without consistent daily logging.",
-      action: "Get structured site data flowing and confirm current works, labour, and programme position."
-    }
-  ]
-};
+const jobs = [
+  {
+    name: "Childers",
+    status: "Behind",
+    position: "Underground services progressing. Site prep ongoing.",
+    holdingUp: "Materials holding up works steel not delivered.",
+    subcontractor: "No major subcontractor issue noted.",
+    materials: "Steel not delivered.",
+    reality: "Site active but next stage not ready.",
+    next: "Complete prep and confirm steel delivery."
+  },
+  {
+    name: "Emerald",
+    status: "On Track",
+    position: "Structure works progressing with steel install underway.",
+    holdingUp: "Nothing currently holding progress.",
+    subcontractor: "All trades performing.",
+    materials: "No material issue noted.",
+    reality: "Job progressing as planned.",
+    next: "Continue steel install and prepare for roofing."
+  },
+  {
+    name: "Williamstown",
+    status: "At Risk",
+    position: "Facade works underway with intermittent progress.",
+    holdingUp: "Subcontractor issue inconsistent attendance.",
+    subcontractor: "Facade contractor inconsistent attendance.",
+    materials: "No material issue noted.",
+    reality: "Work is happening but not driving programme.",
+    next: "Stabilise subcontractor attendance and push facade works."
+  },
+  {
+    name: "D’Aguilar",
+    status: "On Track",
+    position: "Substructure complete and slab preparation underway.",
+    holdingUp: "Nothing currently holding progress.",
+    subcontractor: "All trades performing.",
+    materials: "No material issue noted.",
+    reality: "Job progressing smoothly into next stage.",
+    next: "Pour slab and mobilise structure works."
+  }
+];
